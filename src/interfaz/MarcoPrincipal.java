@@ -179,10 +179,14 @@ public class MarcoPrincipal extends JFrame{
                     public void actionPerformed(ActionEvent e){
                         // Si es un nuevo número y no es 0, sustituyo el valor del display
                         
-                        if (!textoBotones[numBoton].equals("0")) {
+                        if (nuevoNumero) {
+                            
+                            if (!textoBotones[numBoton].equals("0")) {
                             
                             marcoSecundario.setText(textoBotones[numBoton]) ;
                             nuevoNumero = false ; // Ya no es un nuevo número
+                            
+                            }
                             
                         }
                         else{
@@ -251,6 +255,7 @@ public class MarcoPrincipal extends JFrame{
                             // Si tenía alguna pendiente, calculo el resultado de la anterior y luego me guardo la actual
                             
                             operando2 = resultado() ; // Se almacena en operando2 para poder encadenar operaciones posteriores.
+                            operacion = textoBotones[numBoton] ;
                         }
                         
                         System.out.println(operando2 + " " + operacion + " " + operando1) ; // SOUT para comprobar que estoy guardando los valores adecuados.
