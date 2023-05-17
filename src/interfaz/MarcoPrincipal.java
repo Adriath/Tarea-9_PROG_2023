@@ -4,6 +4,8 @@ package interfaz;
 import java.awt.Color;
 import java.awt.Font;
 import static java.awt.Font.PLAIN;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.* ;
 import javax.swing.border.LineBorder;
 
@@ -51,7 +53,7 @@ public class MarcoPrincipal extends JFrame{
     
     // Array de índices del array de botones que corresponden a número ( en el orden en el que pintarán)
     
-    int numeroBotones[] = {14, 9 , 10, 11, 5, 6, 7, 1, 2, 3} ;
+    int numerosBotones[] = {14, 9 , 10, 11, 5, 6, 7, 1, 2, 3} ;
     
     // Array de índices del array de botones que corresponden a operaciones ( en el orden en el que se pintarán)
     
@@ -158,8 +160,37 @@ public class MarcoPrincipal extends JFrame{
             setVisible(true) ; // Mostrar JFrame
         }
         
+        
+        /**
+         * Método privado que recoge los eventos para la pulsación de los 
+         * botones numéricos de la calculadora.
+         */
         private void eventosNumeros(){
             
+            for (int i = 0; i < 10; i++) {
+                
+                int numBoton = numerosBotones[i] ;
+                botones[numBoton].addActionListener(new ActionListener(){
+                    
+                    @Override
+                    public void actionPerformed(ActionEvent e){
+                        // Si es un nuevo número y no es 0, sustituyo el valor del display
+                        
+                        if (!textoBotones[numBoton].equals("0")) {
+                            
+                            marcoSecundario.setText(textoBotones[numBoton]) ;
+                            nuevoNumero = false ; // Ya no es un nuevo número
+                            
+                        }
+                        else{
+                            // Si no, lo añado a los dígitos que ya hubiera
+                            
+                            marcoSecundario.setText(marcoSecundario.getText() + textoBotones[numBoton]) ;
+                        }
+                    }
+                    
+                }) ; // Cierra el ActionListener()
+            }
         }
         
          private void eventoDecimal(){
