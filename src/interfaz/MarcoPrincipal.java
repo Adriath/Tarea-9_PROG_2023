@@ -322,11 +322,43 @@ public class MarcoPrincipal extends JFrame{
         
         
         
+        /**
+         * Método que controla el evento asociado al resultado de las operaciones.
+         */
         private void eventoResultado(){
             
+            botones[0].addActionListener(new ActionListener(){
+                
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    /* Al pulsar el botón de resultado, directamente lo calculo y reseteo la calculadora
+                    sin necesidad de almacenar el resultado para futuras operaciones.
+                    */
+                    
+                    resultado() ;
+                } // Cierra el actionPerformed()
+                
+            }); // Cierra el ActionListener()
         }
         
+        
+        /**
+         * Método privado asociado al evento de limpiar los datos de la calculadora.
+         */
         private void eventoLimpiar(){
+            
+            botones[13].addActionListener(new ActionListener(){
+                
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    // Al pulsar el botón de limpìar, se resetean el display y las variables de la calcudaldor.
+                    
+                    marcoSecundario.setText("0") ;
+                    limpiar();
+                    
+                } // Ciera actionPerformed()
+                
+            }); // Cierra ActionListener()
             
         }
         
