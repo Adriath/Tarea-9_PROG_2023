@@ -6,6 +6,9 @@ import java.awt.Font;
 import static java.awt.Font.PLAIN;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import javax.swing.* ;
 import javax.swing.border.LineBorder;
 
@@ -217,10 +220,107 @@ public class MarcoPrincipal extends JFrame{
                 
             }); // Cierra ActionListener()
         }
+        
+        
          
+        /**
+         * Método privado que añade la función de calcular operaciones a la 
+         * calculadora.
+         */
         private void eventosOperaciones(){
             
+            for (int numBoton : operacionesBotones) { 
+                
+                botones[numBoton].addActionListener(new ActionListener(){
+                    
+                    @Override
+                    public void actionPerformed(ActionEvent e){
+                                                
+                        if (operacion.equals("")) {
+                            // Si no tenía ninguna operación pendiente de realizar
+                            
+                            operacion = textoBotones[numBoton] ; // Asocio la operación del botón a la variable
+                            
+                            operando2 = Double.parseDouble(marcoSecundario.getText()) ; // Asigno a operando2 el valor del marco secundario (display) (como double)
+                            
+                            nuevoNumero = true ; // Reseteo para poder introducir otro número y otro decimal
+                            
+                            puntoDecimal = false ;
+                        }
+                        else{
+                            // Si tenía alguna pendiente, calculo el resultado de la anterior y luego me guardo la actual
+                            
+                            operando2 = resultado() ; // Se almacena en operando2 para poder encadenar operaciones posteriores.
+                        }
+                        
+                        System.out.println(operando2 + " " + operacion + " " + operando1) ; // SOUT para comprobar que estoy guardando los valores adecuados.
+                        
+                    } // Cierra actionPerformed()
+                    
+                }); // Cierra ActionListener()
+            }
         }
+        
+        
+        /**
+         * Calcula el reusltado en funcinón de la operación y lo devuelve formateado en el desplay.
+         * 
+         * @return Devuelve el resultado formateado.
+         */
+        private double resultado(){
+            
+            operando1 = Double.parseDouble(marcoSecundario.getText()) ; // Recojo el valor del display (marco secundario)
+            
+            switch (operacion){
+                // Selecciono y realizo operación
+                
+                case "+": // SUMA
+                    resultado = operando2 + operando1 ;
+                    break ;
+                    
+                case "-": // RESTA
+                    resultado = operando2 - operando1 ;
+                    break ;
+                    
+                case "*": // MULTIPLICACIÓN
+                    resultado = operando2 * operando1 ;
+                    break ;
+                    
+                case "/": // DIVISIÓN
+                    resultado = operando2 / operando1 ;
+                    break ;
+            }
+            
+            // Formateo y muestro en el display
+            
+            Locale localActual = Locale.GERMAN ; 
+            DecimalFormatSymbols simbolos = new DecimalFormatSymbols(localActual) ;
+            simbolos.setDecimalSeparator('.') ;
+            DecimalFormat formatoResultado = new DecimalFormat("#.######", simbolos) ;
+            marcoSecundario.setText(String.valueOf(formatoResultado.format(resultado))) ;
+            
+            // Limpio variables para poder continuar
+            
+            limpiar() ;
+            
+            // Devuelvo el valor del resultado
+            
+            return resultado ;
+        }
+        
+        
+        /**
+         * Resetea los valores de la calculadora para poder continar haciendo operaciones.
+         */
+        private void limpiar(){
+            
+            operando1 = operando2 = 0 ;
+            operacion = "" ;
+            nuevoNumero = true ;
+            puntoDecimal = false ;
+        }
+        
+        
         
         private void eventoResultado(){
             
