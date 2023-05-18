@@ -155,11 +155,11 @@ public class MarcoPrincipal extends JFrame{
         private void initPantalla(){
             
             setLayout(null) ; // Layout absoluto
-            setTitle("Calculadora") ; // Título del JFrame
+            setTitle("Calculador 3000") ; // Título del JFrame
             setSize(290, 455) ; // Dimensiones del JFrame
             setResizable(false) ; // No redimensionable
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE) ; // Cerrar proceso al cerrar ventana
-            getContentPane().setBackground(Color.BLACK) ; // Color de fondo
+            getContentPane().setBackground(Color.BLUE) ; // Color de fondo
             setVisible(true) ; // Mostrar JFrame
         }
         
