@@ -255,7 +255,7 @@ public class MarcoPrincipal extends JFrame{
                         {
                             try
                             {
-                                JOptionPane.showMessageDialog(null, "Error.") ;
+                                JOptionPane.showMessageDialog(marcoSecundario, "Deja de pulsar el mismo operador, ya está bien", "Error", HEIGHT);
                                 limpiar() ;
                             }
                             catch (Exception ex){
