@@ -255,12 +255,16 @@ public class MarcoPrincipal extends JFrame{
                         {
                             try
                             {
-                                JOptionPane.showMessageDialog(marcoSecundario, "Deja de pulsar el mismo operador, ya está bien", "Error", HEIGHT);
+                                JOptionPane.showMessageDialog(marcoSecundario, "Deja de pulsar un operador, ya está bien \n\t(╯°□°）╯︵ ┻━┻", "Error", HEIGHT);
                                 limpiar() ;
                             }
                             catch (Exception ex){
                                 marcoSecundario.setText("Error") ;
                             }
+                        }
+                        else if (operacion.equals("/") && marcoSecundario.getText().equals("0")){
+                            
+                            System.out.println("No se puede entre 0.");
                         }
                         
                         else{
@@ -271,6 +275,7 @@ public class MarcoPrincipal extends JFrame{
                         }
                         
                         System.out.print(operando2 + " " + operacion + " ") ; // SOUT para comprobar que estoy guardando los valores adecuados.
+
                         
                     } // Cierra actionPerformed()
                     
@@ -306,17 +311,10 @@ public class MarcoPrincipal extends JFrame{
                     
                 case "/": // DIVISIÓN
                     
-                    if (operando1 == 0) 
-                    {
-                        marcoSecundario.setText("No se puede dividir entre 0.") ;
-                        limpiar() ;
-                    }
-                    else
-                    {
-                        resultado = operando2 / operando1 ;
-                    }
+                    resultado = operando2 / operando1 ;
                     break ;
             }
+            
             
             // Formateo y muestro en el display
             
