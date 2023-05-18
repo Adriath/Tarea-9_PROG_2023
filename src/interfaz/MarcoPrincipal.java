@@ -44,7 +44,7 @@ public class MarcoPrincipal extends JFrame{
     
     // Array de strings para las etiquetas de los botones
     
-    String textoBotones[]  = {"Resultado", "7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "C", "0", ".", "+"} ;
+    String textoBotones[]  = {"=", "7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "C", "0", ".", "+"} ;
     
     // Array de posiciones en X de cada botón
     
@@ -133,15 +133,15 @@ public class MarcoPrincipal extends JFrame{
             for (int i = 0; i < numBotones; i++) {
                 
                 botones[i] = new JButton(textoBotones[i]) ; // Inicializo JButton
-                int size = (i == 0) ? 24 : 26 ; // El botón de Resultado tendrá un tamaño de fuente menor que todos los demás
+                int size = (i == 0) ? 30 : 26 ; // El botón de Resultado tendrá un tamaño de fuente menor que todos los demás
                 int ancho = (i == 0) ? 245 : anchoBoton ;  // El botón de Resultado será más ancho que todos los demás
                 
                 botones[i].setBounds(xBotones[i], yBotones[i], ancho, altoBoton) ; // Posición y dimensiones
                 botones[i].setFont(new Font("MONOSPACED", PLAIN, size)) ; // Fuente
                 botones[i].setOpaque(true) ; // Para poder darle un color de fondo
                 botones[i].setFocusPainted(false) ; // Para que no salga un recuadro azul cuando tenga el foco
-                botones[i].setBackground(Color.DARK_GRAY) ; // Color de fondo
-                botones[i].setForeground(Color.WHITE) ; // Color de fuente
+                botones[i].setBackground(Color.ORANGE) ; // Color de fondo
+                botones[i].setForeground(Color.BLACK) ; // Color de fuente
                 botones[i].setBorder(new LineBorder(Color.DARK_GRAY)) ; // Borde
                 
                 add(botones[i]) ; // Añado el JButton al JFrame
