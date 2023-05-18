@@ -266,10 +266,7 @@ public class MarcoPrincipal extends JFrame{
                                 marcoSecundario.setText("Error") ;
                             }
                         }
-                        else if (operacion.equals("/") && marcoSecundario.getText().equals("0")){
-                            
-                            System.out.println("No se puede entre 0.");
-                        }
+                       
                         
                         else{
                             // Si tenía alguna pendiente, calculo el resultado de la anterior y luego me guardo la actual
@@ -315,7 +312,14 @@ public class MarcoPrincipal extends JFrame{
                     
                 case "/": // DIVISIÓN
                     
-                    resultado = operando2 / operando1 ;
+                    if (operando1 == 0) 
+                    {
+                        JOptionPane.showMessageDialog(marcoSecundario, "No se puede dividir entre 0.\n\tㄟ( ▔, ▔ )ㄏ", "Error", HEIGHT);
+                    }
+                    else
+                    {
+                        resultado = operando2 / operando1 ;
+                    }
                     break ;
             }
             
