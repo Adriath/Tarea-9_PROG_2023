@@ -251,6 +251,18 @@ public class MarcoPrincipal extends JFrame{
                             
                             puntoDecimal = false ;
                         }
+                        else if (operacion== operacion) 
+                        {
+                            try
+                            {
+                                JOptionPane.showMessageDialog(null, "Error.") ;
+                                limpiar() ;
+                            }
+                            catch (Exception ex){
+                                marcoSecundario.setText("Error") ;
+                            }
+                        }
+                        
                         else{
                             // Si tenía alguna pendiente, calculo el resultado de la anterior y luego me guardo la actual
                             
@@ -258,7 +270,7 @@ public class MarcoPrincipal extends JFrame{
                             operacion = textoBotones[numBoton] ;
                         }
                         
-                        System.out.println(operando2 + " " + operacion + " " + operando1) ; // SOUT para comprobar que estoy guardando los valores adecuados.
+                        System.out.print(operando2 + " " + operacion + " ") ; // SOUT para comprobar que estoy guardando los valores adecuados.
                         
                     } // Cierra actionPerformed()
                     
@@ -275,6 +287,7 @@ public class MarcoPrincipal extends JFrame{
         private double resultado(){
             
             operando1 = Double.parseDouble(marcoSecundario.getText()) ; // Recojo el valor del display (marco secundario)
+            System.out.print(operando1 + "\n") ;
             
             switch (operacion){
                 // Selecciono y realizo operación
@@ -292,7 +305,16 @@ public class MarcoPrincipal extends JFrame{
                     break ;
                     
                 case "/": // DIVISIÓN
-                    resultado = operando2 / operando1 ;
+                    
+                    if (operando1 == 0) 
+                    {
+                        marcoSecundario.setText("No se puede dividir entre 0.") ;
+                        limpiar() ;
+                    }
+                    else
+                    {
+                        resultado = operando2 / operando1 ;
+                    }
                     break ;
             }
             
