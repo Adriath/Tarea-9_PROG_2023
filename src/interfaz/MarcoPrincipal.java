@@ -179,14 +179,18 @@ public class MarcoPrincipal extends JFrame{
                     public void actionPerformed(ActionEvent e){
                         // Si es un nuevo número y no es 0, sustituyo el valor del display
                         
-                        if (nuevoNumero) {
+                        if (nuevoNumero && operacion.equals("")) {
                             
                             if (!textoBotones[numBoton].equals("0")) {
-                            
+                                
                             marcoSecundario.setText(textoBotones[numBoton]) ;
                             nuevoNumero = false ; // Ya no es un nuevo número
-                            
                             }
+                            
+                        }
+                        else if (nuevoNumero && !(operacion.equals(""))){
+                            marcoSecundario.setText(textoBotones[numBoton]) ;
+                            nuevoNumero = false ; // Ya no es un nuevo número
                             
                         }
                         else{
