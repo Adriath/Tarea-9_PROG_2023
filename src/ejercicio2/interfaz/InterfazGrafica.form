@@ -46,7 +46,7 @@
                           <EmptySpace min="-2" pref="376" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jSeparator1" min="-2" pref="684" max="-2" attributes="0"/>
+                          <Component id="Separador" min="-2" pref="684" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="170" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -74,7 +74,7 @@
                   <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                   <Component id="etiquetaMenu" min="-2" pref="53" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+                  <Component id="Separador" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="botonAniadirRegistro" min="-2" pref="72" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
@@ -102,7 +102,7 @@
             <Property name="text" type="java.lang.String" value="MEN&#xda;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSeparator" name="jSeparator1">
+        <Component class="javax.swing.JSeparator" name="Separador">
         </Component>
         <Component class="javax.swing.JButton" name="botonAniadirRegistro">
           <Properties>

@@ -23,13 +23,9 @@ public class GestionFicheros {
         UNIDAD 9: comunicándonos con el usuario. Interfaces.
     */
     
-    
-    // ---------- DECLARACIÓN DE VARIABLES --------------
-        
     private static File fichero = new File("sistemasolar.dat") ;
     private static List<CuerpoCeleste> cuerposCelestes = new ArrayList<>() ;
-    
-    
+     
     // -------------- MÉTODOS ---------------------
     
      /**
@@ -38,13 +34,13 @@ public class GestionFicheros {
      * Luego cierra el fichero. Si por cualquier motivo no se puede leer el disco (está creado 
      * pero no tiene datos) nos avisa que el fichero está vacío.
      */
-    public static void abrir(File fichero, List cuerposCelestes){
+    public static File abrir(){
             
         try
         {
             if (!fichero.exists()) 
             {
-                crearArchivo(fichero);
+                crearArchivo();
             }
             else
             {
@@ -65,12 +61,14 @@ public class GestionFicheros {
         catch (IOException | ClassNotFoundException e){
             System.out.println("\nError: " + e.getMessage()) ;
         }
+        
+        return fichero ;
     }
     
     /**
      * Método que nos crea el fichero. Válido para cuando se comprueba que no existe.
      */
-    public static void crearArchivo(File fichero){
+    public static void crearArchivo(){
         
         try
         {
@@ -80,6 +78,7 @@ public class GestionFicheros {
         catch (Exception e){
             System.out.println("\nError: " + e.getMessage());
         }
+        
     }
     
     
@@ -87,7 +86,7 @@ public class GestionFicheros {
      * Método que nos escribe el ArrayList en el fichero de disco. Es la manera 
      * de guardar los datos serializados ya que la clase CuerpoCeleste lo está.
      */
-    public static void escribirArchivo(File fichero, List cuerposCelestes){
+    public static File escribirArchivo(){
         
         try
         {
@@ -105,5 +104,7 @@ public class GestionFicheros {
         catch(Exception e){
             System.out.println(e.getMessage());
         }
+        
+        return fichero ;
     }
 }

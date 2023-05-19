@@ -1,11 +1,15 @@
 
 package ejercicio2.interfaz;
 
+import ejercicio2.excepciones.ExcepcionCuerpoCeleste;
+import ejercicio2.gestionficheros.GestionFicheros;
 import ejercicio2.modelo.CuerpoCeleste;
 import ejercicio2.operativa.OperativaCuerpoCeleste;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
+import utilidades.Utilidades;
 
 /**
  * Interfaz gráfica para la apliación de gestión de los cuerpos celestes.
@@ -50,7 +54,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
     }
     
     
-        // ------- MÉTODOS PERSONALIZADOS --------
+        // ------- MÉTODOS PERSONALIZADOS DEL ENTORNO GRÁFICO --------
 
     /**
      * Método que resetea (pone en blanco) el visor de mensajes de error.
@@ -59,6 +63,331 @@ public class InterfazGrafica extends javax.swing.JFrame {
         
         mensajeError = "" ;
         consolaMensajes.setText(mensajeError) ;
+    }
+    
+    
+    
+     // ------------- MÉTODOS DE CUERPO CELESTE ---------------------
+    
+    /**
+     * Método privado que añade cuerpos celestes.
+     */
+    public static void aniadirCuerpoCeleste(){
+        
+        short codigoCuerpo ;
+        String nombre ;
+        String tipoObjeto ;
+        int diametro ;
+        
+        boolean validador ;
+        
+        
+        fichero = GestionFicheros.abrir();
+        
+        do // Pide y comprueba el código hasta que sea válido
+        {
+            codigoCuerpo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste (3 dígitos max.):") ;
+            validador = OperativaCuerpoCeleste.compruebaCodigo(codigoCuerpo) ;
+            
+        } while (!validador);
+        
+        validador = false ;
+        
+        do // Pide y comprueba el nombre hasta que sea válido
+        {
+            nombre = Utilidades.leerStringBuffer("\nIntroduce en el nombre del cuerpo celeste (15 caracteres max.):") ;
+            validador = OperativaCuerpoCeleste.compruebaNombre(nombre) ;
+            
+        } while (!validador);
+        
+        validador = false ;
+        
+        // Pedimos el tipo de objeto
+        
+        tipoObjeto = Utilidades.leerStringBuffer("\nIntroduce el tipo de cuerpo celeste:") ;
+        
+        do // Pide y comprueba el diámetro hasta que sea válido
+        { 
+            diametro = Utilidades.leerEnteroBuffer("\nIntroduce el diámetro (6 dígitos max.):") ;
+            validador = OperativaCuerpoCeleste.compruebaDiametro(diametro) ;
+            
+        } while (!validador);
+        
+        /*
+            Hemos terminado de pedir los datos y han sido comprobados. Si son 
+            válidos continuamos almacenándolos.
+        */
+        
+        if (cuerposCelestes.isEmpty()) // Si el array está vacío...
+        {
+            cuerposCelestes = new ArrayList<CuerpoCeleste>() ; // ... créalo.
+        }
+        
+        try
+        {
+            cuerposCelestes.add(new CuerpoCeleste(codigoCuerpo, nombre, tipoObjeto, diametro)) ;
+        }
+        catch(ExcepcionCuerpoCeleste e){
+            
+            System.out.println(e.getMessage());
+        }
+        
+        fichero = GestionFicheros.escribirArchivo() ;
+        System.out.println("\nCuerpo Celeste " + cuerposCelestes.size()+ " añadido");
+    }
+    
+    
+    /**
+     * Método que nos permite visualizar todos los datos almacenador.
+     * Primero comprobamos que el fichero exista.
+     * Si existe, lo abrimos y comprobamos que no esté vacío recorriendo todo su contenido.
+     */
+    public static void listarCuerpoCeleste(){
+        
+        fichero = GestionFicheros.abrir();
+
+        if (cuerposCelestes != null) 
+        {
+            int contador = 1 ;
+
+            for (CuerpoCeleste objeto: cuerposCelestes) 
+            {
+                System.out.println("Registro nº " + contador + " - "  + objeto.toString());
+                contador++ ;
+            }
+        }
+        else
+        {
+            System.out.println("\nNo existen registros de cuerpos celestes.");
+        }
+        
+    }
+    
+    
+    /**
+     * Método que nos permite buscar un registro concreto buscándolo por su código.
+     */
+    public static void buscarCuerpoCelestePorCodigo(){
+        
+        int contador ;
+        boolean encontrado = false ;
+        
+        do
+        {
+            short codigo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste que deseas buscar: ") ;
+        
+            GestionFicheros.abrir() ;
+            
+            contador = 1 ;
+
+            for (CuerpoCeleste cuerpoCeleste: cuerposCelestes) 
+            {
+                if (cuerpoCeleste.getCodigoCuerpo() == codigo) 
+                {
+                    encontrado = true ;
+                    System.out.println("\nRegistro nº" + contador + " - " + cuerpoCeleste.toString());
+                }
+                
+                contador++ ;
+            }
+            
+            if (!encontrado) 
+            {
+                System.out.println("\nREGISTRO NO ENCONTRADO.");
+            }
+            
+        } while (!Utilidades.secuenciaSalida("¿Quieres buscar otro registro?"));
+    }
+    
+    
+    /**
+     * Método que nos permite buscar un registro concreto buscándolo por su tipo.
+     */
+    public static void buscarCuerpoCelestePorTipo(){
+        
+        int contador ;
+        boolean encontrado = false ;
+        
+        do
+        {
+            String tipo = Utilidades.leerStringBuffer("\nIntroduce el código del cuerpo celeste que deseas buscar: ") ;
+        
+            GestionFicheros.abrir() ;
+            
+            contador = 1 ;
+
+            for (CuerpoCeleste cuerpoCeleste: cuerposCelestes) 
+            {
+                if (cuerpoCeleste.getTipoObjeto().equalsIgnoreCase(tipo)) 
+                {
+                    encontrado = true ;
+                    System.out.println("\nRegistro nº" + contador + " - " + cuerpoCeleste.toString());
+                }
+                
+                contador++ ;
+            }
+            
+            if (!encontrado) 
+            {
+                System.out.println("\nNO EXISTEN CUERPOS CELESTES DE ESE TIPO.");
+            }
+            
+        } while (!Utilidades.secuenciaSalida("¿Quieres buscar otro registro?"));
+    }
+    
+    
+    /**
+     * Método similar al anterior pero que en lugar de limitarse a mostrarnos el 
+     * resultado de la búsqueda, nos permite decidir si deseamos elminar el 
+     * registro encontrado.
+     */
+    public static void eliminarCuerpoCeleste(){ // NO FUNCIONA CORRECTAMENTE, VOY A SEGUIR Y LUEGO LO ATIENDO
+        
+        /*
+        Uno de los errores es que elmina una entrada. Poniendo 1 como código, por ejemplo, 
+        ha dado un error pero ha borrado la entrada 1 del fichero. Eso no debería ocurrir porque 
+        el código no coincide con 1.
+        */
+        
+        int contador ;
+        boolean encontrado ;
+        
+        try
+        {
+            do 
+            {
+                short codigo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste que deseas eliminar: ") ;
+        
+                GestionFicheros.abrir() ;
+
+                contador = 1 ;
+                
+                encontrado = false ;
+
+                for(CuerpoCeleste cuerpoCeleste: cuerposCelestes)
+                {
+                    if (cuerpoCeleste.getCodigoCuerpo() == codigo)
+                    {
+                        encontrado = true ;
+                        System.out.println("\nRegistro nº" + contador + " - " + cuerpoCeleste.toString());
+                        
+                        if (!Utilidades.secuenciaSalida("¿Quiere eliminar este registro?")) 
+                        {
+                            cuerposCelestes.remove((contador - 1)) ;
+                            GestionFicheros.escribirArchivo() ;
+                            System.out.printf("\nREGISTRO Nº%d ELIMINADO", contador);
+                        }
+                    }
+                    
+                contador++ ;
+                }
+            
+                if (!encontrado) 
+                {   
+                    System.out.println("\nREGISTRO NO ENCONTRADO.") ;
+                }
+            
+            } while (!Utilidades.secuenciaSalida("\n¿Quieres buscar otro registro?"));
+        }
+        catch(ConcurrentModificationException e){
+            System.err.println("");
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    
+    /**
+     * Método que nos elimina el fichero de datos del disco.
+     */
+    public static void eliminarFichero(){
+        
+        boolean respuesta ;
+        boolean borrado ;
+        
+        if (fichero.exists()) 
+        {
+            try
+            {
+                respuesta = Utilidades.secuenciaSalida("\n¿Desea eliminar el fichero completo?") ;
+
+                if (!respuesta)
+                {
+                    borrado = fichero.delete() ;
+
+                    if (borrado) 
+                    {
+                        System.out.println("\nFICHERO DE DATOS ELMINADO.");
+                        cuerposCelestes.clear();
+                    }
+                }
+                else
+                {
+                    System.out.println("\nNO SE HA REALIZADO NINGUNA ACCIÓN.");
+                }
+            }
+            catch (Exception e){
+                System.err.println("\nAlgún error ocurrió: " + e.getMessage());
+            }
+        }
+        else
+        {
+            System.out.println("\nEL FICHERO NO EXISTE.") ;
+        }
+    }
+    
+    
+    // ------------------ COMPROBADORES / VALIDAODRES ----------------------
+    
+     /**
+     * Método que comprueba si el código del cuerpo celeste tiene 3 dígitos.
+     * 
+     * @param codigo Código del cuerpo celeste.
+     * @return Devuelve true si es válido, false si no.
+     */
+    public static boolean compruebaCodigo(short codigo){
+        
+        boolean valido = false ;
+        
+        if (codigo >= 0 && codigo <= 999) // Si el código es positivo y tiene 3 dígitos como máximo será válido
+            valido = true ;        
+        
+        return valido ;
+    }
+    
+    
+    /**
+     * Método que comprueba si el nombre del cuerpo celeste tiene como máximo 15 caracteres.
+     * 
+     * @param nombre Nombre del cuerpo celeste.
+     * @return Devuelve true si es válido, false si no.
+     */
+    public static boolean compruebaNombre(String nombre){
+        
+        boolean valido = false ;
+        
+        if (nombre.length() <= 15)
+            valido = true ;
+        
+        return valido ;
+    }
+    
+    
+    /**
+     * Método que comprueba si el diámetro tiene 6 dígitos como máximo.
+     * 
+     * @param diametro Diámetro del cuerpo celeste.
+     * @return Devuelve true si es válido, false si no.
+     */
+    public static boolean compruebaDiametro(int diametro){
+        
+        boolean valido = false ;
+        
+        if (diametro >= 0 && diametro <= 999999) // Si el diámetro es positivo y tiene 6 dígitos como máximo será válido
+            valido = true ;
+        
+        return valido ;
     }
     
     
@@ -75,7 +404,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         marcoPrincipal = new javax.swing.JPanel();
         etiquetaMenu = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
+        Separador = new javax.swing.JSeparator();
         botonAniadirRegistro = new javax.swing.JButton();
         botonListarRegistro = new javax.swing.JButton();
         botonBuscarPorCodigo = new javax.swing.JButton();
@@ -140,7 +469,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                         .addComponent(etiquetaMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(376, 376, 376))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, marcoPrincipalLayout.createSequentialGroup()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Separador, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(170, 170, 170))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, marcoPrincipalLayout.createSequentialGroup()
                         .addGroup(marcoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,7 +490,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addComponent(etiquetaMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Separador, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(botonAniadirRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
@@ -192,14 +521,22 @@ public class InterfazGrafica extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonAniadirRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAniadirRegistroActionPerformed
-        limpiarMensajeError();
-        OperativaCuerpoCeleste.aniadirCuerpoCeleste() ;
+        limpiarMensajeError() ;
+        aniadirCuerpoCeleste() ;
         
     }//GEN-LAST:event_botonAniadirRegistroActionPerformed
 
     private void botonListarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonListarRegistroActionPerformed
-        limpiarMensajeError();
-        OperativaCuerpoCeleste.listarCuerpoCeleste() ;
+        limpiarMensajeError() ;
+        
+        if (!fichero.exists()) 
+        {
+            consolaMensajes.setText("No se puede listar, el fichero no existe.");
+        }
+        else
+        {
+            listarCuerpoCeleste() ;
+        }
     }//GEN-LAST:event_botonListarRegistroActionPerformed
 
     private void botonBuscarPorCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarPorCodigoActionPerformed
@@ -208,6 +545,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
     private void botonEliminarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarRegistroActionPerformed
         limpiarMensajeError();
+        eliminarFichero();
     }//GEN-LAST:event_botonEliminarRegistroActionPerformed
 
     private void botonEliminarFicheroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarFicheroActionPerformed
@@ -250,6 +588,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSeparator Separador;
     private javax.swing.JButton botonAniadirRegistro;
     private javax.swing.JButton botonBuscarPorCodigo;
     private javax.swing.JButton botonEliminarFichero;
@@ -257,7 +596,6 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private javax.swing.JButton botonListarRegistro;
     private javax.swing.JLabel consolaMensajes;
     private javax.swing.JLabel etiquetaMenu;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel marcoPrincipal;
     // End of variables declaration//GEN-END:variables
 }
