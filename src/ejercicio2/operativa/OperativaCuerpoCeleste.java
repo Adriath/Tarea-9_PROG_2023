@@ -35,7 +35,7 @@ public class OperativaCuerpoCeleste {
     /**
      * Método privado que añade cuerpos celestes.
      */
-    private static void aniadirCuerpoCeleste(){
+    public static void aniadirCuerpoCeleste(){
         
         short codigoCuerpo ;
         String nombre ;
@@ -105,7 +105,7 @@ public class OperativaCuerpoCeleste {
      * Primero comprobamos que el fichero exista.
      * Si existe, lo abrimos y comprobamos que no esté vacío recorriendo todo su contenido.
      */
-    private static void listarCuerpoCeleste(){
+    public static void listarCuerpoCeleste(){
         
         if (!fichero.exists()) 
         {
@@ -136,7 +136,7 @@ public class OperativaCuerpoCeleste {
     /**
      * Método que nos permite buscar un registro concreto buscándolo por su código.
      */
-    private static void buscarCuerpoCelestePorCodigo(){
+    public static void buscarCuerpoCelestePorCodigo(){
         
         int contador ;
         boolean encontrado = false ;
@@ -172,7 +172,7 @@ public class OperativaCuerpoCeleste {
     /**
      * Método que nos permite buscar un registro concreto buscándolo por su tipo.
      */
-    private static void buscarCuerpoCelestePorTipo(){
+    public static void buscarCuerpoCelestePorTipo(){
         
         int contador ;
         boolean encontrado = false ;
@@ -210,7 +210,7 @@ public class OperativaCuerpoCeleste {
      * resultado de la búsqueda, nos permite decidir si deseamos elminar el 
      * registro encontrado.
      */
-    private static void eliminarCuerpoCeleste(){ // NO FUNCIONA CORRECTAMENTE, VOY A SEGUIR Y LUEGO LO ATIENDO
+    public static void eliminarCuerpoCeleste(){ // NO FUNCIONA CORRECTAMENTE, VOY A SEGUIR Y LUEGO LO ATIENDO
         
         /*
         Uno de los errores es que elmina una entrada. Poniendo 1 como código, por ejemplo, 
@@ -270,7 +270,7 @@ public class OperativaCuerpoCeleste {
     /**
      * Método que nos elimina el fichero de datos del disco.
      */
-    private static void eliminarFichero(){
+    public static void eliminarFichero(){
         
         boolean respuesta ;
         boolean borrado ;

@@ -1,7 +1,11 @@
 
 package ejercicio2.interfaz;
 
-import javax.swing.JOptionPane;
+import ejercicio2.modelo.CuerpoCeleste;
+import ejercicio2.operativa.OperativaCuerpoCeleste;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Interfaz gráfica para la apliación de gestión de los cuerpos celestes.
@@ -22,6 +26,16 @@ public class InterfazGrafica extends javax.swing.JFrame {
      * Mensaje que se muestra en la visor de mensajes de error.
      */
     private String mensajeError = "" ;
+    
+    /**
+     * Fichero en el que se van almacenar los datos.
+     */
+    private static File fichero = new File("sistemasolar.dat") ;
+    
+    /**
+     * Lista utilizada para gestionar los datos.
+     */
+    private static List<CuerpoCeleste> cuerposCelestes = new ArrayList<>() ;
     
     
     // --------------- DECLARACIÓN DE MÉTODOS -----------------------
@@ -179,10 +193,13 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
     private void botonAniadirRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAniadirRegistroActionPerformed
         limpiarMensajeError();
+        OperativaCuerpoCeleste.aniadirCuerpoCeleste() ;
+        
     }//GEN-LAST:event_botonAniadirRegistroActionPerformed
 
     private void botonListarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonListarRegistroActionPerformed
         limpiarMensajeError();
+        OperativaCuerpoCeleste.listarCuerpoCeleste() ;
     }//GEN-LAST:event_botonListarRegistroActionPerformed
 
     private void botonBuscarPorCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarPorCodigoActionPerformed
