@@ -1,5 +1,5 @@
 
-package interfaz;
+package calculadora;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -19,10 +19,10 @@ import javax.swing.border.LineBorder;
  * @author Adrián Arjona
  * @version Mayo 2023
  */
-public class MarcoPrincipal extends JFrame{
+public class Calculadora extends JFrame{
     
     
-     /* Francisco Adrián Arjona Bravo
+    /* Francisco Adrián Arjona Bravo
         UNIDAD 9: comunicándonos con el usuario. Interfaces.
     */
     
@@ -94,7 +94,7 @@ public class MarcoPrincipal extends JFrame{
         /**
          * Constructor de la clase MarcoPrincipal
          */
-        public MarcoPrincipal(){
+        public Calculadora(){
 
             initDisplay() ; // Display de la calculadora
             initBotones(); // Botones de la calculadora
@@ -397,6 +397,6 @@ public class MarcoPrincipal extends JFrame{
         
         public static void main(String[] args) {
         
-            new MarcoPrincipal() ;
+            new Calculadora() ;
     }
 }
