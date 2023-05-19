@@ -1,6 +1,8 @@
 
 package ejercicio2.interfaz;
 
+import javax.swing.JOptionPane;
+
 /**
  * Interfaz gráfica para la apliación de gestión de los cuerpos celestes.
  * 
@@ -8,17 +10,45 @@ package ejercicio2.interfaz;
  * @version mayo 2023
  */
 public class InterfazGrafica extends javax.swing.JFrame {
+    
+    /* Francisco Adrián Arjona Bravo
+        UNIDAD 9: comunicándonos con el usuario. Interfaces.
+    */
+    
 
+    // ---------------- DECLARACIÓN DE VARIABLES --------------------
+    
+    /**
+     * Mensaje que se muestra en la visor de mensajes de error.
+     */
+    private String mensajeError = "" ;
+    
+    
+    // --------------- DECLARACIÓN DE MÉTODOS -----------------------
+    
+        // ------- CONSTRUCTOR -----------
+    
     /**
      * Creates new form InterfazGrafica
      */
     public InterfazGrafica() {
         initComponents();
     }
+    
+    
+        // ------- MÉTODOS PERSONALIZADOS --------
 
+    /**
+     * Método que resetea (pone en blanco) el visor de mensajes de error.
+     */
+    private void limpiarMensajeError(){
+        
+        mensajeError = "" ;
+        consolaMensajes.setText(mensajeError) ;
+    }
     
     
-    
+    // --------------- CÓDIGO GENERADO POR NETBEANS ---------------------------
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -148,23 +178,23 @@ public class InterfazGrafica extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonAniadirRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAniadirRegistroActionPerformed
-        // TODO add your handling code here:
+        limpiarMensajeError();
     }//GEN-LAST:event_botonAniadirRegistroActionPerformed
 
     private void botonListarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonListarRegistroActionPerformed
-        // TODO add your handling code here:
+        limpiarMensajeError();
     }//GEN-LAST:event_botonListarRegistroActionPerformed
 
     private void botonBuscarPorCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarPorCodigoActionPerformed
-        // TODO add your handling code here:
+        limpiarMensajeError();
     }//GEN-LAST:event_botonBuscarPorCodigoActionPerformed
 
     private void botonEliminarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarRegistroActionPerformed
-        // TODO add your handling code here:
+        limpiarMensajeError();
     }//GEN-LAST:event_botonEliminarRegistroActionPerformed
 
     private void botonEliminarFicheroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarFicheroActionPerformed
-        // TODO add your handling code here:
+        limpiarMensajeError();
     }//GEN-LAST:event_botonEliminarFicheroActionPerformed
 
     /**
