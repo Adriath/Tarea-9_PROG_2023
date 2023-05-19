@@ -38,13 +38,13 @@ public class GestionFicheros {
      * Luego cierra el fichero. Si por cualquier motivo no se puede leer el disco (está creado 
      * pero no tiene datos) nos avisa que el fichero está vacío.
      */
-    private static void abrir(){
+    public static void abrir(File fichero, List cuerposCelestes){
             
         try
         {
             if (!fichero.exists()) 
             {
-                crearArchivo() ;
+                crearArchivo(fichero);
             }
             else
             {
@@ -70,7 +70,7 @@ public class GestionFicheros {
     /**
      * Método que nos crea el fichero. Válido para cuando se comprueba que no existe.
      */
-    private static void crearArchivo(){
+    public static void crearArchivo(File fichero){
         
         try
         {
@@ -87,7 +87,7 @@ public class GestionFicheros {
      * Método que nos escribe el ArrayList en el fichero de disco. Es la manera 
      * de guardar los datos serializados ya que la clase CuerpoCeleste lo está.
      */
-    private static void escribirArchivo(){
+    public static void escribirArchivo(File fichero, List cuerposCelestes){
         
         try
         {

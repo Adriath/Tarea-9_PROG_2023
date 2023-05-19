@@ -2,9 +2,12 @@
 package ejercicio2.operativa;
 
 import ejercicio2.excepciones.ExcepcionCuerpoCeleste;
+import ejercicio2.gestionficheros.GestionFicheros;
 import ejercicio2.modelo.CuerpoCeleste;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.List;
 import utilidades.Utilidades;
 
 /**
@@ -20,6 +23,15 @@ public class OperativaCuerpoCeleste {
         UNIDAD 9: comunicándonos con el usuario. Interfaces.
     */
     
+    // ------------- DECLARACIÓN DE VARIABLES ----------------
+    
+    private static File fichero = new File("sistemasolar.dat") ;
+    private static List<CuerpoCeleste> cuerposCelestes = new ArrayList<>() ;
+    
+    
+    
+    // ------------- MÉTODOS ---------------------
+    
     /**
      * Método privado que añade cuerpos celestes.
      */
@@ -32,12 +44,13 @@ public class OperativaCuerpoCeleste {
         
         boolean validador ;
         
-        abrir() ;
+        
+        GestionFicheros.abrir(fichero, cuerposCelestes);
         
         do // Pide y comprueba el código hasta que sea válido
         {
             codigoCuerpo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste (3 dígitos max.):") ;
-            validador = MetodosCuerpoCeleste.compruebaCodigo(codigoCuerpo) ;
+            validador = OperativaCuerpoCeleste.compruebaCodigo(codigoCuerpo) ;
             
         } while (!validador);
         
@@ -46,7 +59,7 @@ public class OperativaCuerpoCeleste {
         do // Pide y comprueba el nombre hasta que sea válido
         {
             nombre = Utilidades.leerStringBuffer("\nIntroduce en el nombre del cuerpo celeste (15 caracteres max.):") ;
-            validador = MetodosCuerpoCeleste.compruebaNombre(nombre) ;
+            validador = OperativaCuerpoCeleste.compruebaNombre(nombre) ;
             
         } while (!validador);
         
@@ -59,7 +72,7 @@ public class OperativaCuerpoCeleste {
         do // Pide y comprueba el diámetro hasta que sea válido
         { 
             diametro = Utilidades.leerEnteroBuffer("\nIntroduce el diámetro (6 dígitos max.):") ;
-            validador = MetodosCuerpoCeleste.compruebaDiametro(diametro) ;
+            validador = OperativaCuerpoCeleste.compruebaDiametro(diametro) ;
             
         } while (!validador);
         
@@ -82,7 +95,7 @@ public class OperativaCuerpoCeleste {
             System.out.println(e.getMessage());
         }
         
-        escribirArchivo();
+        GestionFicheros.escribirArchivo(fichero, cuerposCelestes) ;
         System.out.println("\nCuerpo Celeste " + cuerposCelestes.size()+ " añadido");
     }
     
@@ -100,7 +113,7 @@ public class OperativaCuerpoCeleste {
         }
         else
         {
-            abrir() ;
+            GestionFicheros.abrir(fichero, cuerposCelestes);
             
             if (cuerposCelestes != null) 
             {
@@ -132,7 +145,7 @@ public class OperativaCuerpoCeleste {
         {
             short codigo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste que deseas buscar: ") ;
         
-            abrir() ;
+            GestionFicheros.abrir(fichero, cuerposCelestes) ;
             
             contador = 1 ;
 
@@ -168,7 +181,7 @@ public class OperativaCuerpoCeleste {
         {
             String tipo = Utilidades.leerStringBuffer("\nIntroduce el código del cuerpo celeste que deseas buscar: ") ;
         
-            abrir() ;
+            GestionFicheros.abrir(fichero, cuerposCelestes) ;
             
             contador = 1 ;
 
@@ -214,7 +227,7 @@ public class OperativaCuerpoCeleste {
             {
                 short codigo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste que deseas eliminar: ") ;
         
-                abrir() ;
+                GestionFicheros.abrir(fichero, cuerposCelestes) ;
 
                 contador = 1 ;
                 
@@ -230,7 +243,7 @@ public class OperativaCuerpoCeleste {
                         if (!Utilidades.secuenciaSalida("¿Quiere eliminar este registro?")) 
                         {
                             cuerposCelestes.remove((contador - 1)) ;
-                            escribirArchivo() ;
+                            GestionFicheros.escribirArchivo(fichero, cuerposCelestes) ;
                             System.out.printf("\nREGISTRO Nº%d ELIMINADO", contador);
                         }
                     }
@@ -284,5 +297,58 @@ public class OperativaCuerpoCeleste {
         catch (Exception e){
             System.err.println("\nAlgún error ocurrió: " + e.getMessage());
         }
+    }
+    
+    
+    // ------------------ COMPROBADORES / VALIDAODRES ----------------------
+    
+     /**
+     * Método que comprueba si el código del cuerpo celeste tiene 3 dígitos.
+     * 
+     * @param codigo Código del cuerpo celeste.
+     * @return Devuelve true si es válido, false si no.
+     */
+    public static boolean compruebaCodigo(short codigo){
+        
+        boolean valido = false ;
+        
+        if (codigo >= 0 && codigo <= 999) // Si el código es positivo y tiene 3 dígitos como máximo será válido
+            valido = true ;        
+        
+        return valido ;
+    }
+    
+    
+    /**
+     * Método que comprueba si el nombre del cuerpo celeste tiene como máximo 15 caracteres.
+     * 
+     * @param nombre Nombre del cuerpo celeste.
+     * @return Devuelve true si es válido, false si no.
+     */
+    public static boolean compruebaNombre(String nombre){
+        
+        boolean valido = false ;
+        
+        if (nombre.length() <= 15)
+            valido = true ;
+        
+        return valido ;
+    }
+    
+    
+    /**
+     * Método que comprueba si el diámetro tiene 6 dígitos como máximo.
+     * 
+     * @param diametro Diámetro del cuerpo celeste.
+     * @return Devuelve true si es válido, false si no.
+     */
+    public static boolean compruebaDiametro(int diametro){
+        
+        boolean valido = false ;
+        
+        if (diametro >= 0 && diametro <= 999999) // Si el diámetro es positivo y tiene 6 dígitos como máximo será válido
+            valido = true ;
+        
+        return valido ;
     }
 }
