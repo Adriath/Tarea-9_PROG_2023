@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 /**
  * Clase dedicada a métodos que ayuden al desarrollo de la tarea.
@@ -509,6 +510,44 @@ public class Utilidades {
         
         return numero ;
     }    
+    
+     
+    // ------- USANDO INTERFACES GRÁFICAS ---------
+    
+    
+      /**
+     * Método que crea un objeto de tipo BufferedReader para leer un número corto
+     * introducido por el/la usuario/a.
+     * 
+     * @param msg. Tipo String. Mensaje con el que se pide el número al usuario/a.
+     * @return numero. Short. Devuelve el número introducido por el/la usuario/a.
+     */
+    public static short leerShortBufferGUI(String msg){
+    
+        short numero = 0 ;
+        String entrada = "" ;
+        boolean validador = false ;
+        
+        do 
+            {
+                entrada = JOptionPane.showInputDialog(null, msg) ;
+                
+                try
+                {
+                    numero = Short.parseShort(entrada) ;
+                    validador = true ;
+                }
+                catch (NumberFormatException e){
+                    JOptionPane.showMessageDialog(null, "Tienes que introducir un número no demasiado largo.") ;
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido algún error.") ;
+                }
+                
+            } while (!validador);
+        
+        return numero ;
+    }  
     
     
 // ---------------------- VALIDACIONES -------------------------

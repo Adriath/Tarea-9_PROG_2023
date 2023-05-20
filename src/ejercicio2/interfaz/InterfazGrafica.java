@@ -9,6 +9,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import utilidades.Utilidades;
 
 /**
@@ -86,8 +89,15 @@ public class InterfazGrafica extends javax.swing.JFrame {
         
         do // Pide y comprueba el código hasta que sea válido
         {
-            codigoCuerpo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste (3 dígitos max.):") ;
+            
+            codigoCuerpo = Utilidades.leerShortBufferGUI("Introduce el código (3 dígitos): ") ;
+//            codigoCuerpo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste (3 dígitos max.):") ;
             validador = OperativaCuerpoCeleste.compruebaCodigo(codigoCuerpo) ;
+            
+            if (!validador) 
+            {
+                JOptionPane.showInputDialog(null, "Has introducido más de 3 dígitos. Inténtalo de nuevo.") ;
+            }
             
         } while (!validador);
         
