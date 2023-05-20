@@ -562,6 +562,41 @@ public class Utilidades {
     }  
     
     
+     /**
+     * Método que pide un númeroa través de un mensaje de diálogo 
+     * (interfaz gráfica).
+     * 
+     * @param msg. Tipo String. Mensaje con el que se pide el número al usuario/a.
+     * @return numero. Int. Devuelve el número introducido por el/la usuario/a.
+     */
+    public static int leerEnteroBufferGUI(String msg){
+    
+        int numero = 0 ;
+        String entrada = "" ;
+        boolean validador = false ;
+        
+        do 
+            {
+                entrada = JOptionPane.showInputDialog(null, msg) ;
+                
+                try
+                {
+                    numero = Integer.parseInt(entrada) ;
+                    validador = true ;
+                }
+                catch (NumberFormatException e){
+                    JOptionPane.showMessageDialog(null, "Tienes que introducir un número.") ;
+                }
+                catch(Exception e){
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido algún error.") ;
+                }
+                
+            } while (!validador);
+        
+        return numero ;
+    } 
+    
+    
     /**
      * Método que pide un número corto a través de un mensaje de diálogo 
      * (interfaz gráfica).

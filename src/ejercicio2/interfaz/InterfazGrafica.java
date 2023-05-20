@@ -87,7 +87,10 @@ public class InterfazGrafica extends javax.swing.JFrame {
         
         fichero = GestionFicheros.abrir();
         
-        do // Pide y comprueba el código hasta que sea válido
+        
+        // Pedimos el CÓDIGO
+        
+        do 
         {
             
             codigoCuerpo = Utilidades.leerShortBufferGUI("Introduce el código (3 dígitos): ") ;
@@ -103,7 +106,11 @@ public class InterfazGrafica extends javax.swing.JFrame {
         
         validador = false ;
         
-        do // Pide y comprueba el nombre hasta que sea válido
+        
+        
+        // Pedimos el NOMBRE
+        
+        do 
         {
             nombre = Utilidades.leerCadenaGUI("Introduce en el nombre del cuerpo celeste (15 caracteres max.):") ;
 //            nombre = Utilidades.leerStringBuffer("\nIntroduce en el nombre del cuerpo celeste (15 caracteres max.):") ;
@@ -118,14 +125,26 @@ public class InterfazGrafica extends javax.swing.JFrame {
         
         validador = false ;
         
-        // Pedimos el tipo de objeto
         
-        tipoObjeto = Utilidades.leerStringBuffer("\nIntroduce el tipo de cuerpo celeste:") ;
         
-        do // Pide y comprueba el diámetro hasta que sea válido
+        // Pedimos el TIPO DE OBJETO
+        
+        tipoObjeto = Utilidades.leerCadenaGUI("Introduce el tipo de cuerpo celeste:") ;
+//        tipoObjeto = Utilidades.leerStringBuffer("\nIntroduce el tipo de cuerpo celeste:") ;
+
+
+
+        // Pedimos el DIÁMETRO
+
+        do
         { 
-            diametro = Utilidades.leerEnteroBuffer("\nIntroduce el diámetro (6 dígitos max.):") ;
+            diametro = Utilidades.leerEnteroBufferGUI("Introduce el diámetro (6 dígitos max.):") ;
             validador = OperativaCuerpoCeleste.compruebaDiametro(diametro) ;
+            
+            if (!validador) 
+            {
+                JOptionPane.showInputDialog(null, "El diámetro no puede tener más de 6 dítigos. Inténtalo de nuevo: ") ;
+            }
             
         } while (!validador);
         
