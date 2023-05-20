@@ -411,6 +411,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         botonEliminarRegistro = new javax.swing.JButton();
         botonEliminarFichero = new javax.swing.JButton();
         consolaMensajes = new javax.swing.JLabel();
+        botonBuscarPorTipo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -458,6 +459,14 @@ public class InterfazGrafica extends javax.swing.JFrame {
             }
         });
 
+        botonBuscarPorTipo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        botonBuscarPorTipo.setText("Buscar registro por tipo");
+        botonBuscarPorTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBuscarPorTipoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout marcoPrincipalLayout = new javax.swing.GroupLayout(marcoPrincipal);
         marcoPrincipal.setLayout(marcoPrincipalLayout);
         marcoPrincipalLayout.setHorizontalGroup(
@@ -477,7 +486,8 @@ public class InterfazGrafica extends javax.swing.JFrame {
                             .addComponent(botonListarRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botonBuscarPorCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(botonEliminarRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botonEliminarFichero, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(botonEliminarFichero, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonBuscarPorTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(308, 308, 308))))
             .addGroup(marcoPrincipalLayout.createSequentialGroup()
                 .addGap(165, 165, 165)
@@ -498,10 +508,12 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(botonBuscarPorCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
+                .addComponent(botonBuscarPorTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
                 .addComponent(botonEliminarRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(botonEliminarFichero, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(consolaMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62))
         );
@@ -537,6 +549,8 @@ public class InterfazGrafica extends javax.swing.JFrame {
         {
             listarCuerpoCeleste() ;
         }
+        
+        botonListarRegistro.setEnabled(rootPaneCheckingEnabled) ;
     }//GEN-LAST:event_botonListarRegistroActionPerformed
 
     private void botonBuscarPorCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarPorCodigoActionPerformed
@@ -544,13 +558,27 @@ public class InterfazGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_botonBuscarPorCodigoActionPerformed
 
     private void botonEliminarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarRegistroActionPerformed
-        limpiarMensajeError();
-        eliminarFichero();
+        limpiarMensajeError() ;
+        
+        if (!fichero.exists()) 
+        {
+            consolaMensajes.setText("No se puede eliminar, el fichero no existe.") ;
+        }
+        else
+        {
+            eliminarCuerpoCeleste() ;
+        }
     }//GEN-LAST:event_botonEliminarRegistroActionPerformed
 
     private void botonEliminarFicheroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarFicheroActionPerformed
-        limpiarMensajeError();
+        limpiarMensajeError() ;
+        
+        eliminarFichero() ;
     }//GEN-LAST:event_botonEliminarFicheroActionPerformed
+
+    private void botonBuscarPorTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarPorTipoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonBuscarPorTipoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -585,12 +613,14 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 new InterfazGrafica().setVisible(true);
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator Separador;
     private javax.swing.JButton botonAniadirRegistro;
     private javax.swing.JButton botonBuscarPorCodigo;
+    private javax.swing.JButton botonBuscarPorTipo;
     private javax.swing.JButton botonEliminarFichero;
     private javax.swing.JButton botonEliminarRegistro;
     private javax.swing.JButton botonListarRegistro;
