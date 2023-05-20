@@ -338,38 +338,41 @@ public class InterfazGrafica extends javax.swing.JFrame {
      */
     public static void eliminarFichero(){
         
-        boolean respuesta ;
+        int respuesta ;
         boolean borrado ;
         
-        if (fichero.exists()) 
+        if (fichero.exists())
+            // Si el fichero existe
         {
             try
             {
-                respuesta = Utilidades.secuenciaSalida("\n¿Desea eliminar el fichero completo?") ;
+                // Mensaje de confirmación para borrar el fichero
+                
+                respuesta = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el fichero completo?", "Confirmación", JOptionPane.YES_NO_OPTION) ;
 
-                if (!respuesta)
+                if (respuesta == JOptionPane.YES_OPTION)
+                    //Si la respuesta es sí...
                 {
-                    borrado = fichero.delete() ;
+                    borrado = fichero.delete() ; // ... borra el fichero.
 
                     if (borrado) 
+                        // Si ha sido borrado avisa con un mensaje.
                     {
-                        System.out.println("\nFICHERO DE DATOS ELMINADO.");
+                        Utilidades.mostrarMensajeGUI("FICHERO DE DATOS ELMINADO.") ;
                         cuerposCelestes.clear();
                     }
                 }
                 else
+                    // Si la respuesta es no o no se contesta...
                 {
-                    System.out.println("\nNO SE HA REALIZADO NINGUNA ACCIÓN.");
+                    Utilidades.mostrarMensajeGUI("NO SE HA REALIZADO NINGUNA ACCIÓN."); // ... avisa diciendo que no se hizo nada.
                 }
             }
             catch (Exception e){
                 System.err.println("\nAlgún error ocurrió: " + e.getMessage());
             }
         }
-        else
-        {
-            System.out.println("\nEL FICHERO NO EXISTE.") ;
-        }
+        
     }
     
     
@@ -611,6 +614,11 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
     private void botonEliminarFicheroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarFicheroActionPerformed
         limpiarMensajeError() ;
+        
+        if (!(fichero.exists())) 
+        {
+            consolaMensajes.setText("EL FICHERO NO EXISTE.") ;
+        }
         
         eliminarFichero() ;
     }//GEN-LAST:event_botonEliminarFicheroActionPerformed
