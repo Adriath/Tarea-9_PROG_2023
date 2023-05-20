@@ -105,8 +105,14 @@ public class InterfazGrafica extends javax.swing.JFrame {
         
         do // Pide y comprueba el nombre hasta que sea válido
         {
-            nombre = Utilidades.leerStringBuffer("\nIntroduce en el nombre del cuerpo celeste (15 caracteres max.):") ;
+            nombre = Utilidades.leerCadenaGUI("Introduce en el nombre del cuerpo celeste (15 caracteres max.):") ;
+//            nombre = Utilidades.leerStringBuffer("\nIntroduce en el nombre del cuerpo celeste (15 caracteres max.):") ;
             validador = OperativaCuerpoCeleste.compruebaNombre(nombre) ;
+            
+            if (!validador) 
+            {
+                JOptionPane.showInputDialog(null, "El nombre no puede tener más de 15 caracteres. Inténtalo de nuevo: ") ;
+            }
             
         } while (!validador);
         

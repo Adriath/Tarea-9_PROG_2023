@@ -527,10 +527,44 @@ public class Utilidades {
     }
     
     
+    /**
+     * Método que pide una cadena a través de un mensaje de diálogo 
+     * (interfaz gráfica). Controla que la cadena no esté vacía ni comience por 
+     * espacio.
+     * 
+     * @param msg. Tipo String. Mensaje con el que se pide la cadena al usuario/a.
+     * @return numero. String. Devuelve la cadena introducida por el/la usuario/a.
+     */
+    public static String leerCadenaGUI(String msg){
+    
+        String entrada = "" ;
+        String entradaValida = "" ;
+        boolean validador = false ;
+        
+        do 
+        {
+            entrada = JOptionPane.showInputDialog(null, msg) ;
+            
+            if (entrada == null || entrada.startsWith(" ") || entrada.trim().isEmpty()) 
+                // Si la cadena está vacía o empieza por espacio
+            {
+                JOptionPane.showMessageDialog(null, "La cadena no puede estar en blanco o comenzar por un espacio.") ;
+            }
+            else
+            {
+                entradaValida = entrada ;
+                validador = true ;
+            }
+            
+        } while (!validador);
+        
+        return entradaValida ;
+    }  
+    
     
     /**
-     * Método que crea un objeto de tipo BufferedReader para leer un número corto
-     * introducido por el/la usuario/a.
+     * Método que pide un número corto a través de un mensaje de diálogo 
+     * (interfaz gráfica).
      * 
      * @param msg. Tipo String. Mensaje con el que se pide el número al usuario/a.
      * @return numero. Short. Devuelve el número introducido por el/la usuario/a.

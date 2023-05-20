@@ -1,15 +1,6 @@
 
 package ejercicio2.operativa;
 
-import ejercicio2.excepciones.ExcepcionCuerpoCeleste;
-import ejercicio2.gestionficheros.GestionFicheros;
-import ejercicio2.modelo.CuerpoCeleste;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.List;
-import utilidades.Utilidades;
-
 /**
  * Clase que reúne los métodos responsables de la gestión de registros de 
  * cuerpos celestes.
