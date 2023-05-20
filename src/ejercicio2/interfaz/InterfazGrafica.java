@@ -494,6 +494,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
             }
         });
 
+        consolaMensajes.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        consolaMensajes.setForeground(new java.awt.Color(204, 0, 0));
+
         botonBuscarPorTipo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         botonBuscarPorTipo.setText("Buscar registro por tipo");
         botonBuscarPorTipo.addActionListener(new java.awt.event.ActionListener() {
@@ -613,7 +616,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_botonEliminarFicheroActionPerformed
 
     private void botonBuscarPorTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarPorTipoActionPerformed
-        // TODO add your handling code here:
+        Utilidades.mostrarMensajeGUI("Esto todavía no funciona") ;
     }//GEN-LAST:event_botonBuscarPorTipoActionPerformed
 
     /**
