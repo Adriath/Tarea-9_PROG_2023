@@ -515,7 +515,20 @@ public class Utilidades {
     // ------- USANDO INTERFACES GRÁFICAS ---------
     
     
-      /**
+    /**
+     * Método que abrevia la manera de mostrar un mensaje por pantalla mediante 
+     * interfaz gráfica.
+     * 
+     * @param msg Mensaje que se muestra al usuario.
+     */
+    public static void mostrarMensajeGUI(String msg){
+        
+        JOptionPane.showMessageDialog(null, msg) ;
+    }
+    
+    
+    
+    /**
      * Método que crea un objeto de tipo BufferedReader para leer un número corto
      * introducido por el/la usuario/a.
      * 

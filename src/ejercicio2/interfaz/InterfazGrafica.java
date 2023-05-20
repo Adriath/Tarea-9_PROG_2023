@@ -565,6 +565,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
     private void botonBuscarPorCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarPorCodigoActionPerformed
         limpiarMensajeError();
+        Utilidades.mostrarMensajeGUI("Esto todavía no funciona") ;
     }//GEN-LAST:event_botonBuscarPorCodigoActionPerformed
 
     private void botonEliminarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarRegistroActionPerformed
