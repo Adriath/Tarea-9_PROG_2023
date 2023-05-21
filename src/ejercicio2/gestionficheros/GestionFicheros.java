@@ -1,6 +1,7 @@
 
 package ejercicio2.gestionficheros;
 
+import ejercicio2.interfaz.InterfazGrafica;
 import ejercicio2.modelo.CuerpoCeleste;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,8 +28,9 @@ public class GestionFicheros {
     private static List<CuerpoCeleste> cuerposCelestes = new ArrayList<>() ;
      
     // -------------- MÉTODOS ---------------------
+
     
-     /**
+    /**
      * Método que nos abre el fichero de datos para cargar su contenido en el array "cuerposCelestes".
      * Previamente comprueba si el fichero exsite y, si es así, carga su contenido en el ArrayList.
      * Luego cierra el fichero. Si por cualquier motivo no se puede leer el disco (está creado 

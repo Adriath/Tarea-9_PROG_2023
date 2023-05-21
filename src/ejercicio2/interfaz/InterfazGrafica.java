@@ -59,6 +59,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
     
         // ------- MÉTODOS PERSONALIZADOS DEL ENTORNO GRÁFICO --------
 
+       
     /**
      * Método que resetea (pone en blanco) el visor de mensajes de error.
      */
@@ -168,7 +169,8 @@ public class InterfazGrafica extends javax.swing.JFrame {
         }
         
         fichero = GestionFicheros.escribirArchivo() ;
-        System.out.println("\nCuerpo Celeste " + cuerposCelestes.size()+ " añadido");
+        
+//        System.out.println("\nCuerpo Celeste " + cuerposCelestes.size()+ " añadido");
     }
     
     
@@ -576,6 +578,8 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private void botonAniadirRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAniadirRegistroActionPerformed
         limpiarMensajeError() ;
         aniadirCuerpoCeleste() ;
+        
+        Utilidades.mostrarMensajeGUI("Cuerpo Celeste " + cuerposCelestes.size()+ " añadido") ;
         
     }//GEN-LAST:event_botonAniadirRegistroActionPerformed
 
