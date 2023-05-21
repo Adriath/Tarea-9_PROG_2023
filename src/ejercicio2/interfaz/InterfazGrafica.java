@@ -588,14 +588,14 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private void botonListarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonListarRegistroActionPerformed
         limpiarMensajeError() ;
         
-//        if (!fichero.exists()) 
-//        {
-//            consolaMensajes.setText("No se puede listar, el fichero no existe.");
-//        }
-//        else
-//        {
-//            listarCuerpoCeleste() ;
-//        }
+        if (!fichero.exists()) 
+        {
+            consolaMensajes.setText("No se puede listar, el fichero no existe.");
+        }
+        else
+        {
+            listarCuerpoCeleste() ;
+        }
 
         VentanaSecundaria nuevaVentana = new VentanaSecundaria() ;
         nuevaVentana.setVisible(true) ;
