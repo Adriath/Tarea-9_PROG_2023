@@ -54,6 +54,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
      */
     public InterfazGrafica() {
         initComponents();
+        setLocationRelativeTo(null) ;
     }
     
     
@@ -454,6 +455,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         botonBuscarPorTipo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         etiquetaMenu.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         etiquetaMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -586,14 +588,20 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private void botonListarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonListarRegistroActionPerformed
         limpiarMensajeError() ;
         
-        if (!fichero.exists()) 
-        {
-            consolaMensajes.setText("No se puede listar, el fichero no existe.");
-        }
-        else
-        {
-            listarCuerpoCeleste() ;
-        }
+//        if (!fichero.exists()) 
+//        {
+//            consolaMensajes.setText("No se puede listar, el fichero no existe.");
+//        }
+//        else
+//        {
+//            listarCuerpoCeleste() ;
+//        }
+
+        VentanaSecundaria nuevaVentana = new VentanaSecundaria() ;
+        nuevaVentana.setVisible(true) ;
+        
+        dispose() ;
+        
         
         botonListarRegistro.setEnabled(rootPaneCheckingEnabled) ;
     }//GEN-LAST:event_botonListarRegistroActionPerformed
