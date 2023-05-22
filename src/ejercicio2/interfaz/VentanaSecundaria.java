@@ -65,7 +65,7 @@ public class VentanaSecundaria extends javax.swing.JFrame {
         tabla.setVisible(true);
         
         marcoPrincipal.setLayout(null) ;
-        scrollPane.setBounds(10, 10, 600, 400) ;
+        scrollPane.setBounds(200, 100, 600, 400) ;
         marcoPrincipal.add(scrollPane) ;
     }
     
