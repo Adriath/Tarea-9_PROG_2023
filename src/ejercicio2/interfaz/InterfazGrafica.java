@@ -9,9 +9,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import utilidades.Utilidades;
 
 /**
@@ -42,7 +40,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
     /**
      * Lista utilizada para gestionar los datos.
      */
-    private static List<CuerpoCeleste> cuerposCelestes = new ArrayList<>() ;
+    public static List<CuerpoCeleste> cuerposCelestes = new ArrayList<>() ;
     
     
     // --------------- DECLARACIÓN DE MÉTODOS -----------------------
@@ -595,12 +593,15 @@ public class InterfazGrafica extends javax.swing.JFrame {
         else
         {
             listarCuerpoCeleste() ;
+            
+            marcoPrincipal.setVisible(false); ;
+            setVisible(false);
+            
+            VentanaSecundaria nuevaVentana = new VentanaSecundaria(cuerposCelestes) ;
+            nuevaVentana.setVisible(true) ;
         }
 
-        VentanaSecundaria nuevaVentana = new VentanaSecundaria() ;
-        nuevaVentana.setVisible(true) ;
         
-        dispose() ;
         
         
         botonListarRegistro.setEnabled(rootPaneCheckingEnabled) ;

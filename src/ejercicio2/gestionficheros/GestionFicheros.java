@@ -1,7 +1,6 @@
 
 package ejercicio2.gestionficheros;
 
-import ejercicio2.interfaz.InterfazGrafica;
 import ejercicio2.modelo.CuerpoCeleste;
 import java.io.File;
 import java.io.FileInputStream;

@@ -1,19 +1,78 @@
 
 package ejercicio2.interfaz;
 
+import ejercicio2.modelo.CuerpoCeleste;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Adrián
  */
 public class VentanaSecundaria extends javax.swing.JFrame {
-
+    
+    
+    // ------------ DECLARACIÓN DE VARIABLES -----------------
+    
+   
+    
+    private static List<CuerpoCeleste> cuerposCelestes = new ArrayList<>() ;
+    
+    
+    // ---------------- MÉTODOS ------------------
+    
+        // --- CONSTRUCTORES ---
+    
     /**
      * Creates new form VentanaSecundaria
      */
-    public VentanaSecundaria() {
+    public VentanaSecundaria(List<CuerpoCeleste> cuerposCelestes) {
         initComponents();
         setLocationRelativeTo(null) ;
+        
+        JTable  tabla ;
+        DefaultTableModel modeloTabla ;
+        
+        cuerposCelestes = InterfazGrafica.cuerposCelestes ;
+        
+         // Crear los datos de la tabla en un arreglo bidimensional
+        Object[][] data = new Object[cuerposCelestes.size()][4];
+        for (int i = 0; i < cuerposCelestes.size(); i++) {
+            CuerpoCeleste cuerpoCeleste = cuerposCelestes.get(i);
+            data[i][0] = cuerpoCeleste.getCodigoCuerpo() ;
+            data[i][1] = cuerpoCeleste.getNombre();
+            data[i][2] = cuerpoCeleste.getTipoObjeto();
+            data[i][3] = cuerpoCeleste.getDiametro();
+        }
+
+        // Crear los nombres de las columnas
+        String[] columnNames = { "Código", "Nombre", "Tipo", "Diámetro" };
+
+        // Crear el modelo de la tabla con los datos y los nombres de las columnas
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+
+        // Crear la tabla con el modelo
+        tabla = new JTable(model);
+
+        // Agregar la tabla a un JScrollPane para permitir el desplazamiento si hay muchos registros
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        
+        add(scrollPane);
+        scrollPane.setVisible(true) ;
+        tabla.setVisible(true);
+        
+        marcoPrincipal.setLayout(null) ;
+        scrollPane.setBounds(10, 10, 600, 400) ;
+        marcoPrincipal.add(scrollPane) ;
     }
+    
+    
+    
+    // ----------------- CÓDIGO GENERADO POR NETBEANS ---------------------
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,7 +165,7 @@ public class VentanaSecundaria extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaSecundaria().setVisible(true);
+                new VentanaSecundaria(cuerposCelestes).setVisible(true);
             }
         });
     }
