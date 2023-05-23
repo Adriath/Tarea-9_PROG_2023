@@ -19,6 +19,8 @@ public class VentanaSecundaria extends javax.swing.JFrame {
 
     private static List<CuerpoCeleste> cuerposCelestes = new ArrayList<>() ;
     
+    private DefaultTableModel modeloTabla ;
+    
     
     // ---------------- MÉTODOS ------------------
     
@@ -81,17 +83,18 @@ public class VentanaSecundaria extends javax.swing.JFrame {
         cuerposCelestes = InterfazGrafica.cuerposCelestes ;
         
          // Crear los datos de la tabla en un arreglo bidimensional
-        Object[][] data = new Object[cuerposCelestes.size()][4];
+        Object[][] data = new Object[cuerposCelestes.size()][5];
         for (int i = 0; i < cuerposCelestes.size(); i++) {
             CuerpoCeleste cuerpoCeleste = cuerposCelestes.get(i);
-            data[i][0] = cuerpoCeleste.getCodigoCuerpo() ;
-            data[i][1] = cuerpoCeleste.getNombre();
-            data[i][2] = cuerpoCeleste.getTipoObjeto();
-            data[i][3] = cuerpoCeleste.getDiametro();
+            data[i][0] = i + 1 ;
+            data[i][1] = cuerpoCeleste.getCodigoCuerpo() ;
+            data[i][2] = cuerpoCeleste.getNombre();
+            data[i][3] = cuerpoCeleste.getTipoObjeto();
+            data[i][4] = cuerpoCeleste.getDiametro();
         }
 
         // Crear los nombres de las columnas
-        String[] columnNames = { "Código", "Nombre", "Tipo", "Diámetro" };
+        String[] columnNames = { "Registro", "Código", "Nombre", "Tipo", "Diámetro" };
 
         // Crear el modelo de la tabla con los datos y los nombres de las columnas
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
@@ -111,6 +114,10 @@ public class VentanaSecundaria extends javax.swing.JFrame {
         marcoPrincipal.add(scrollPane) ;
     }
 
+    public void setModeloTabla(DefaultTableModel modeloTabla) {
+        this.modeloTabla = modeloTabla;
+    }
+    
     
     
     // ----------------- CÓDIGO GENERADO POR NETBEANS ---------------------

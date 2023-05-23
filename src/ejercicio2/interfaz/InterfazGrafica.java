@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import utilidades.Utilidades;
 
 /**
@@ -41,6 +42,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
      * Lista utilizada para gestionar los datos.
      */
     public static List<CuerpoCeleste> cuerposCelestes = new ArrayList<>() ;
+    
+    
+    VentanaSecundaria nuevaVentana ;
     
     
     // --------------- DECLARACIÓN DE MÉTODOS -----------------------
@@ -178,7 +182,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
      * Primero comprobamos que el fichero exista.
      * Si existe, lo abrimos y comprobamos que no esté vacío recorriendo todo su contenido.
      */
-    public static void listarCuerpoCeleste(){
+    public static DefaultTableModel listarCuerpoCeleste(){
         
         fichero = GestionFicheros.abrir();
 
@@ -197,6 +201,31 @@ public class InterfazGrafica extends javax.swing.JFrame {
             System.out.println("\nNo existen registros de cuerpos celestes.");
         }
         
+        
+        // CREACIÓN DEL MODELO PARA LA TABLA
+        
+          // Creación de los datos de la tabla en un array bidimensional
+          
+        Object[][] data = new Object[cuerposCelestes.size()][5] ;
+        
+        for (int i = 0; i < cuerposCelestes.size(); i++) {
+            
+            CuerpoCeleste cuerpoCeleste = cuerposCelestes.get(i);
+            data[i][0] = i + 1 ;
+            data[i][1] = cuerpoCeleste.getCodigoCuerpo() ;
+            data[i][2] = cuerpoCeleste.getNombre() ;
+            data[i][3] = cuerpoCeleste.getTipoObjeto() ;
+            data[i][4] = cuerpoCeleste.getDiametro() ;
+        }
+
+        // Crear los nombres de las columnas
+        String[] columnaNombres = { "Registro", "Código", "Nombre", "Tipo", "Diámetro" } ;
+
+        // Crear el modelo de la tabla con los datos y los nombres de las columnas
+        DefaultTableModel modeloTabla = new DefaultTableModel(data, columnaNombres) ;
+        
+        
+        return modeloTabla ;
     }
     
     
@@ -277,7 +306,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
      * resultado de la búsqueda, nos permite decidir si deseamos elminar el 
      * registro encontrado.
      */
-    public static void eliminarCuerpoCeleste(){ // NO FUNCIONA CORRECTAMENTE, VOY A SEGUIR Y LUEGO LO ATIENDO
+    public static boolean eliminarCuerpoCeleste(){ // NO FUNCIONA CORRECTAMENTE, VOY A SEGUIR Y LUEGO LO ATIENDO
         
         /*
         Uno de los errores es que elmina una entrada. Poniendo 1 como código, por ejemplo, 
@@ -292,58 +321,51 @@ public class InterfazGrafica extends javax.swing.JFrame {
         
         boolean encontrado ;
         boolean validador = false ;
+        boolean borrado = false ;
         
         try
         {
-            do 
+            
+            short codigo = Utilidades.leerShortBufferGUI("Introduce el código del cuerpo celeste que deseas eliminar: ") ;
+
+            GestionFicheros.abrir() ;
+
+            contador = 1 ;
+
+            encontrado = false ;
+
+            for(CuerpoCeleste cuerpoCeleste: cuerposCelestes)
             {
-                short codigo = Utilidades.leerShortBufferGUI("Introduce el código del cuerpo celeste que deseas eliminar: ") ;
-        
-                GestionFicheros.abrir() ;
 
-                contador = 1 ;
-                
-                encontrado = false ;
+                mensaje = "¿Desea eliminar el registro " + contador + "?\n " + cuerposCelestes.get(contador - 1).toString() ;
 
-                for(CuerpoCeleste cuerpoCeleste: cuerposCelestes)
+                if (cuerpoCeleste.getCodigoCuerpo() == codigo)
                 {
-                    
-                    mensaje = "¿Desea eliminar el registro " + contador + "?\n " + cuerposCelestes.get(contador - 1).toString() ;
-                    
-                    if (cuerpoCeleste.getCodigoCuerpo() == codigo)
-                    {
-                        encontrado = true ;
+                    encontrado = true ;
 //                        System.out.println("\nRegistro nº" + contador + " - " + cuerpoCeleste.toString());
 
-                        respuesta = JOptionPane.showConfirmDialog(null, mensaje, "Confirmación", JOptionPane.YES_NO_OPTION) ;
+                    respuesta = JOptionPane.showConfirmDialog(null, mensaje, "Confirmación", JOptionPane.YES_NO_OPTION) ;
+
+                    if (respuesta == JOptionPane.YES_OPTION) 
+                    {
+                        mensaje = "REGISTRO Nº " + contador + " ELIMINADO" ;
+
+                        cuerposCelestes.remove((contador - 1)) ;
+                        GestionFicheros.escribirArchivo() ;
+                        Utilidades.mostrarMensajeGUI(mensaje) ;
                         
-                        if (respuesta == JOptionPane.YES_OPTION) 
-                        {
-                            mensaje = "REGISTRO Nº " + contador + " ELIMINADO" ;
-                            
-                            cuerposCelestes.remove((contador - 1)) ;
-                            GestionFicheros.escribirArchivo() ;
-                            Utilidades.mostrarMensajeGUI(mensaje) ;
-                        }
+                        borrado = true ;
                     }
-                    
-                contador++ ;
                 }
-            
-                if (!encontrado) 
-                {   
-                    VentanaSecundaria.consolaMensajes.setText("REGISTRO NO ENCONTRADO.") ;
-                }
-                
-                
-                respuesta = JOptionPane.showConfirmDialog(null, "Quieres buscar otro registro?", "Confirmación", JOptionPane.YES_NO_OPTION) ;
-                
-                if (respuesta == JOptionPane.NO_OPTION) 
-                {
-                    validador = true ;
-                }
-            
-            } while (!validador) ;
+
+            contador++ ;
+            }
+
+            if (!encontrado) 
+            {   
+                VentanaSecundaria.consolaMensajes.setText("REGISTRO NO ENCONTRADO.") ;
+            }
+          
         }
         catch(ConcurrentModificationException e){
             System.err.println("");
@@ -351,6 +373,8 @@ public class InterfazGrafica extends javax.swing.JFrame {
         catch(Exception e){
             System.out.println(e.getMessage());
         }
+        
+        return borrado ;
     }
     
     
@@ -612,12 +636,10 @@ public class InterfazGrafica extends javax.swing.JFrame {
         }
         else
         {
-            listarCuerpoCeleste() ;
-            
             marcoPrincipal.setVisible(false); ;
             setVisible(false);
             
-            VentanaSecundaria nuevaVentana = new VentanaSecundaria(cuerposCelestes) ;
+            VentanaSecundaria nuevaVentana = new VentanaSecundaria(cuerposCelestes, listarCuerpoCeleste()) ;
             nuevaVentana.setVisible(true) ;
         }
 
@@ -633,7 +655,13 @@ public class InterfazGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_botonBuscarPorCodigoActionPerformed
 
     private void botonEliminarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarRegistroActionPerformed
+        
+        int respuesta ;
+        boolean validador = false ;
+        boolean borrado = false ;
+        
         limpiarMensajeError() ;
+        
         
         if (!fichero.exists()) 
         {
@@ -641,16 +669,38 @@ public class InterfazGrafica extends javax.swing.JFrame {
         }
         else
         {
-            listarCuerpoCeleste() ;
             
             marcoPrincipal.setVisible(false); ;
             setVisible(false);
             
-            VentanaSecundaria nuevaVentana = new VentanaSecundaria(cuerposCelestes) ;
+            VentanaSecundaria nuevaVentana = new VentanaSecundaria(cuerposCelestes, listarCuerpoCeleste()) ;
             nuevaVentana.setVisible(true) ;
             
-            eliminarCuerpoCeleste() ;
-            marcoPrincipal.setVisible(true) ;
+            do{
+            
+                eliminarCuerpoCeleste() ;
+                
+                if (borrado) 
+                {
+                    nuevaVentana.dispose() ;
+                    VentanaSecundaria nuevaVentana2 = new VentanaSecundaria(cuerposCelestes, listarCuerpoCeleste()) ;
+                    nuevaVentana2.setVisible(true);
+                }
+                 
+                respuesta = JOptionPane.showConfirmDialog(null, "Quieres buscar otro registro?", "Confirmación", JOptionPane.YES_NO_OPTION) ;
+                
+                if (respuesta == JOptionPane.NO_OPTION) 
+                {
+                    validador = true ;
+                }
+            
+            } while (!validador) ;
+            
+            /*
+            Posible solución a que se refresque la pantalla. Tiene un fallo, y es que se actualiza
+            únicamente cuando ya no se desean borrar más.
+            */
+           
         }
     }//GEN-LAST:event_botonEliminarRegistroActionPerformed
 
