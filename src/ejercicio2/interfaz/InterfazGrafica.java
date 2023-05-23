@@ -650,6 +650,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
             nuevaVentana.setVisible(true) ;
             
             eliminarCuerpoCeleste() ;
+            marcoPrincipal.setVisible(true) ;
         }
     }//GEN-LAST:event_botonEliminarRegistroActionPerformed
 
