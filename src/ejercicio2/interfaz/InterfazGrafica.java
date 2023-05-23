@@ -286,13 +286,18 @@ public class InterfazGrafica extends javax.swing.JFrame {
         */
         
         int contador ;
+        int respuesta ;
+        
+        String mensaje ;
+        
         boolean encontrado ;
+        boolean validador = false ;
         
         try
         {
             do 
             {
-                short codigo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste que deseas eliminar: ") ;
+                short codigo = Utilidades.leerShortBufferGUI("Introduce el código del cuerpo celeste que deseas eliminar: ") ;
         
                 GestionFicheros.abrir() ;
 
@@ -302,16 +307,23 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
                 for(CuerpoCeleste cuerpoCeleste: cuerposCelestes)
                 {
+                    
+                    mensaje = "¿Desea eliminar el registro " + contador + "?\n " + cuerposCelestes.get(contador - 1).toString() ;
+                    
                     if (cuerpoCeleste.getCodigoCuerpo() == codigo)
                     {
                         encontrado = true ;
-                        System.out.println("\nRegistro nº" + contador + " - " + cuerpoCeleste.toString());
+//                        System.out.println("\nRegistro nº" + contador + " - " + cuerpoCeleste.toString());
+
+                        respuesta = JOptionPane.showConfirmDialog(null, mensaje, "Confirmación", JOptionPane.YES_NO_OPTION) ;
                         
-                        if (!Utilidades.secuenciaSalida("¿Quiere eliminar este registro?")) 
+                        if (respuesta == JOptionPane.YES_OPTION) 
                         {
+                            mensaje = "REGISTRO Nº " + contador + " ELIMINADO" ;
+                            
                             cuerposCelestes.remove((contador - 1)) ;
                             GestionFicheros.escribirArchivo() ;
-                            System.out.printf("\nREGISTRO Nº%d ELIMINADO", contador);
+                            Utilidades.mostrarMensajeGUI(mensaje) ;
                         }
                     }
                     
@@ -320,10 +332,18 @@ public class InterfazGrafica extends javax.swing.JFrame {
             
                 if (!encontrado) 
                 {   
-                    System.out.println("\nREGISTRO NO ENCONTRADO.") ;
+                    VentanaSecundaria.consolaMensajes.setText("REGISTRO NO ENCONTRADO.") ;
+                }
+                
+                
+                respuesta = JOptionPane.showConfirmDialog(null, "Quieres buscar otro registro?", "Confirmación", JOptionPane.YES_NO_OPTION) ;
+                
+                if (respuesta == JOptionPane.NO_OPTION) 
+                {
+                    validador = true ;
                 }
             
-            } while (!Utilidades.secuenciaSalida("\n¿Quieres buscar otro registro?"));
+            } while (!validador) ;
         }
         catch(ConcurrentModificationException e){
             System.err.println("");
@@ -621,6 +641,14 @@ public class InterfazGrafica extends javax.swing.JFrame {
         }
         else
         {
+            listarCuerpoCeleste() ;
+            
+            marcoPrincipal.setVisible(false); ;
+            setVisible(false);
+            
+            VentanaSecundaria nuevaVentana = new VentanaSecundaria(cuerposCelestes) ;
+            nuevaVentana.setVisible(true) ;
+            
             eliminarCuerpoCeleste() ;
         }
     }//GEN-LAST:event_botonEliminarRegistroActionPerformed

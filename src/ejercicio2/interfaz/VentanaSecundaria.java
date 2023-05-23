@@ -16,9 +16,7 @@ public class VentanaSecundaria extends javax.swing.JFrame {
     
     
     // ------------ DECLARACIÓN DE VARIABLES -----------------
-    
-   
-    
+
     private static List<CuerpoCeleste> cuerposCelestes = new ArrayList<>() ;
     
     
@@ -35,6 +33,50 @@ public class VentanaSecundaria extends javax.swing.JFrame {
         
         JTable  tabla ;
         DefaultTableModel modeloTabla ;
+        
+        cuerposCelestes = InterfazGrafica.cuerposCelestes ;
+        
+         // Crear los datos de la tabla en un arreglo bidimensional
+        Object[][] data = new Object[cuerposCelestes.size()][5];
+        for (int i = 0; i < cuerposCelestes.size(); i++) {
+            CuerpoCeleste cuerpoCeleste = cuerposCelestes.get(i);
+            data[i][0] = i + 1 ;
+            data[i][1] = cuerpoCeleste.getCodigoCuerpo() ;
+            data[i][2] = cuerpoCeleste.getNombre();
+            data[i][3] = cuerpoCeleste.getTipoObjeto();
+            data[i][4] = cuerpoCeleste.getDiametro();
+        }
+
+        // Crear los nombres de las columnas
+        String[] columnNames = { "Registro", "Código", "Nombre", "Tipo", "Diámetro" };
+
+        // Crear el modelo de la tabla con los datos y los nombres de las columnas
+        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+
+        // Crear la tabla con el modelo
+        tabla = new JTable(model);
+
+        // Agregar la tabla a un JScrollPane para permitir el desplazamiento si hay muchos registros
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        
+        add(scrollPane);
+        scrollPane.setVisible(true) ;
+        tabla.setVisible(true);
+        
+        marcoPrincipal.setLayout(null) ;
+        scrollPane.setBounds(200, 100, 600, 400) ;
+        marcoPrincipal.add(scrollPane) ;
+    }
+    
+    
+      /**
+     * Creates new form VentanaSecundaria
+     */
+    public VentanaSecundaria(List<CuerpoCeleste> cuerposCelestes, DefaultTableModel modeloTabla) {
+        initComponents();
+        setLocationRelativeTo(null) ;
+        
+        JTable  tabla ;
         
         cuerposCelestes = InterfazGrafica.cuerposCelestes ;
         
@@ -68,7 +110,7 @@ public class VentanaSecundaria extends javax.swing.JFrame {
         scrollPane.setBounds(200, 100, 600, 400) ;
         marcoPrincipal.add(scrollPane) ;
     }
-    
+
     
     
     // ----------------- CÓDIGO GENERADO POR NETBEANS ---------------------
@@ -85,6 +127,7 @@ public class VentanaSecundaria extends javax.swing.JFrame {
 
         marcoPrincipal = new javax.swing.JPanel();
         botonVolver = new javax.swing.JButton();
+        consolaMensajes = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
@@ -97,21 +140,31 @@ public class VentanaSecundaria extends javax.swing.JFrame {
             }
         });
 
+        consolaMensajes.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        consolaMensajes.setForeground(new java.awt.Color(204, 0, 0));
+
         javax.swing.GroupLayout marcoPrincipalLayout = new javax.swing.GroupLayout(marcoPrincipal);
         marcoPrincipal.setLayout(marcoPrincipalLayout);
         marcoPrincipalLayout.setHorizontalGroup(
             marcoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, marcoPrincipalLayout.createSequentialGroup()
-                .addContainerGap(368, Short.MAX_VALUE)
+            .addGroup(marcoPrincipalLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(consolaMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(botonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(353, 353, 353))
         );
         marcoPrincipalLayout.setVerticalGroup(
             marcoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, marcoPrincipalLayout.createSequentialGroup()
-                .addContainerGap(553, Short.MAX_VALUE)
-                .addComponent(botonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
+            .addGroup(marcoPrincipalLayout.createSequentialGroup()
+                .addContainerGap(524, Short.MAX_VALUE)
+                .addGroup(marcoPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, marcoPrincipalLayout.createSequentialGroup()
+                        .addComponent(botonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, marcoPrincipalLayout.createSequentialGroup()
+                        .addComponent(consolaMensajes, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -172,6 +225,7 @@ public class VentanaSecundaria extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonVolver;
+    public static javax.swing.JLabel consolaMensajes;
     private javax.swing.JPanel marcoPrincipal;
     // End of variables declaration//GEN-END:variables
 }
