@@ -680,11 +680,11 @@ public class InterfazGrafica extends javax.swing.JFrame {
             
                 borrado = eliminarCuerpoCeleste() ;
                 
-//                if (borrado) 
-//                {
-//                    AQUÍ IRÍA UNA MANERA DE REFRESCAR LA PÁGINA
-//                    
-//                }
+                if (borrado) 
+                {
+                    nuevaVentana.dispose() ;
+                    botonListarRegistroActionPerformed(evt) ;
+                }
                  
                 respuesta = JOptionPane.showConfirmDialog(null, "Quieres buscar otro registro?", "Confirmación", JOptionPane.YES_NO_OPTION) ;
                 nuevaVentana.limpiarConsolaMensajes() ;
