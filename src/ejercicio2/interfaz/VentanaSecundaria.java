@@ -82,25 +82,9 @@ public class VentanaSecundaria extends javax.swing.JFrame {
         
         cuerposCelestes = InterfazGrafica.cuerposCelestes ;
         
-         // Crear los datos de la tabla en un arreglo bidimensional
-        Object[][] data = new Object[cuerposCelestes.size()][5];
-        for (int i = 0; i < cuerposCelestes.size(); i++) {
-            CuerpoCeleste cuerpoCeleste = cuerposCelestes.get(i);
-            data[i][0] = i + 1 ;
-            data[i][1] = cuerpoCeleste.getCodigoCuerpo() ;
-            data[i][2] = cuerpoCeleste.getNombre();
-            data[i][3] = cuerpoCeleste.getTipoObjeto();
-            data[i][4] = cuerpoCeleste.getDiametro();
-        }
-
-        // Crear los nombres de las columnas
-        String[] columnNames = { "Registro", "Código", "Nombre", "Tipo", "Diámetro" };
-
-        // Crear el modelo de la tabla con los datos y los nombres de las columnas
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
-
+        
         // Crear la tabla con el modelo
-        tabla = new JTable(model);
+        tabla = new JTable(modeloTabla);
 
         // Agregar la tabla a un JScrollPane para permitir el desplazamiento si hay muchos registros
         JScrollPane scrollPane = new JScrollPane(tabla);

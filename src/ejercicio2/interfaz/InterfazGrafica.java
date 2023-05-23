@@ -44,9 +44,6 @@ public class InterfazGrafica extends javax.swing.JFrame {
     public static List<CuerpoCeleste> cuerposCelestes = new ArrayList<>() ;
     
     
-    VentanaSecundaria nuevaVentana ;
-    
-    
     // --------------- DECLARACIÓN DE MÉTODOS -----------------------
     
         // ------- CONSTRUCTOR -----------
@@ -232,38 +229,61 @@ public class InterfazGrafica extends javax.swing.JFrame {
     /**
      * Método que nos permite buscar un registro concreto buscándolo por su código.
      */
-    public static void buscarCuerpoCelestePorCodigo(){
+    @SuppressWarnings("empty-statement")
+    public static DefaultTableModel buscarCuerpoCelestePorCodigo(){
         
         int contador ;
         boolean encontrado = false ;
         
-        do
-        {
-            short codigo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste que deseas buscar: ") ;
+        VentanaSecundaria nuevaVentana ;
+        DefaultTableModel modeloTabla = null ;
         
-            GestionFicheros.abrir() ;
-            
-            contador = 1 ;
+        Object[][] data = new Object[cuerposCelestes.size()][5] ;
+        data = new Object[cuerposCelestes.size()][5];
+        String[] columnaNombres = { "Registro", "Código", "Nombre", "Tipo", "Diámetro" };
+        
+      
+        short codigo = Utilidades.leerShortBufferGUI("Introduce el código del cuerpo celeste que deseas buscar:") ;
+        
+//            short codigo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste que deseas buscar: ") ;
 
-            for (CuerpoCeleste cuerpoCeleste: cuerposCelestes) 
-            {
-                if (cuerpoCeleste.getCodigoCuerpo() == codigo) 
-                {
-                    encontrado = true ;
-                    System.out.println("\nRegistro nº" + contador + " - " + cuerpoCeleste.toString());
+        GestionFicheros.abrir() ;
+
+        contador = 1 ;
+
+        for (CuerpoCeleste cuerpoCeleste: cuerposCelestes) 
+        {
+            encontrado = true ;
+            
+//                    System.out.println("\nRegistro nº" + contador + " - " + cuerpoCeleste.toString());
+
+             // Crear los datos de la tabla en un arreglo bidimensional
+             
+            
+            if (cuerpoCeleste.getCodigoCuerpo() == codigo) {
+
+                for (int i = 0; i < cuerposCelestes.size(); i++) {
+                    cuerpoCeleste = cuerposCelestes.get(i);
+                    data[i][0] = i + 1 ;
+                    data[i][1] = cuerpoCeleste.getCodigoCuerpo() ;
+                    data[i][2] = cuerpoCeleste.getNombre();
+                    data[i][3] = cuerpoCeleste.getTipoObjeto();
+                    data[i][4] = cuerpoCeleste.getDiametro();
                 }
-                
-                contador++ ;
             }
-            
-            if (!encontrado) 
-            {
-                System.out.println("\nREGISTRO NO ENCONTRADO.");
-            }
-            
-        } while (!Utilidades.secuenciaSalida("¿Quieres buscar otro registro?"));
+
+            contador++ ;
+        }
+
+        if (!encontrado) 
+        {
+            System.out.println("\nREGISTRO NO ENCONTRADO.");
+        }
+        
+        modeloTabla = new DefaultTableModel(data, columnaNombres) ;
+       
+        return modeloTabla ;
     }
-    
     
     /**
      * Método que nos permite buscar un registro concreto buscándolo por su tipo.
@@ -651,7 +671,23 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
     private void botonBuscarPorCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarPorCodigoActionPerformed
         limpiarMensajeError();
-        Utilidades.mostrarMensajeGUI("Esto todavía no funciona") ;
+        
+        DefaultTableModel modeloTabla = new DefaultTableModel() ;
+        
+        if (!fichero.exists()) 
+        {
+            consolaMensajes.setText("No se puede buscar, el fichero no existe.");
+        }
+        else
+        {
+            marcoPrincipal.setVisible(false) ;
+            setVisible(false) ;
+            
+            modeloTabla = buscarCuerpoCelestePorCodigo() ;
+            
+            VentanaSecundaria nuevaVentana = new VentanaSecundaria(cuerposCelestes, modeloTabla) ;
+            nuevaVentana.setVisible(true) ;
+        }
     }//GEN-LAST:event_botonBuscarPorCodigoActionPerformed
 
     private void botonEliminarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarRegistroActionPerformed
@@ -686,7 +722,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                     botonListarRegistroActionPerformed(evt) ;
                 }
                  
-                respuesta = JOptionPane.showConfirmDialog(null, "Quieres buscar otro registro?", "Confirmación", JOptionPane.YES_NO_OPTION) ;
+                respuesta = JOptionPane.showConfirmDialog(null, "Quieres eliminar otro registro?", "Confirmación", JOptionPane.YES_NO_OPTION) ;
                 nuevaVentana.limpiarConsolaMensajes() ;
                 
                 if (respuesta == JOptionPane.NO_OPTION) 
