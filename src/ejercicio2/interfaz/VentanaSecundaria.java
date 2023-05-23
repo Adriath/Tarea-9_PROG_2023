@@ -113,6 +113,13 @@ public class VentanaSecundaria extends javax.swing.JFrame {
         scrollPane.setBounds(200, 100, 600, 400) ;
         marcoPrincipal.add(scrollPane) ;
     }
+    
+    
+    public static void limpiarConsolaMensajes(){
+        
+        consolaMensajes.setText("") ;
+    }
+    
 
     public void setModeloTabla(DefaultTableModel modeloTabla) {
         this.modeloTabla = modeloTabla;

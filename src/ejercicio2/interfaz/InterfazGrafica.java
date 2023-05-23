@@ -678,16 +678,16 @@ public class InterfazGrafica extends javax.swing.JFrame {
             
             do{
             
-                eliminarCuerpoCeleste() ;
+                borrado = eliminarCuerpoCeleste() ;
                 
-                if (borrado) 
-                {
-                    nuevaVentana.dispose() ;
-                    VentanaSecundaria nuevaVentana2 = new VentanaSecundaria(cuerposCelestes, listarCuerpoCeleste()) ;
-                    nuevaVentana2.setVisible(true);
-                }
+//                if (borrado) 
+//                {
+//                    AQUÍ IRÍA UNA MANERA DE REFRESCAR LA PÁGINA
+//                    
+//                }
                  
                 respuesta = JOptionPane.showConfirmDialog(null, "Quieres buscar otro registro?", "Confirmación", JOptionPane.YES_NO_OPTION) ;
+                nuevaVentana.limpiarConsolaMensajes() ;
                 
                 if (respuesta == JOptionPane.NO_OPTION) 
                 {
@@ -695,11 +695,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 }
             
             } while (!validador) ;
-            
-            /*
-            Posible solución a que se refresque la pantalla. Tiene un fallo, y es que se actualiza
-            únicamente cuando ya no se desean borrar más.
-            */
+        
            
         }
     }//GEN-LAST:event_botonEliminarRegistroActionPerformed
