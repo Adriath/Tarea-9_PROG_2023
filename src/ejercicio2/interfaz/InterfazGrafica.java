@@ -229,7 +229,6 @@ public class InterfazGrafica extends javax.swing.JFrame {
     /**
      * Método que nos permite buscar un registro concreto buscándolo por su código.
      */
-    @SuppressWarnings("empty-statement")
     public static DefaultTableModel buscarCuerpoCelestePorCodigo(){
         
         int contador ;
@@ -262,14 +261,12 @@ public class InterfazGrafica extends javax.swing.JFrame {
             
             if (cuerpoCeleste.getCodigoCuerpo() == codigo) {
 
-                for (int i = 0; i < cuerposCelestes.size(); i++) {
-                    cuerpoCeleste = cuerposCelestes.get(i);
-                    data[i][0] = i + 1 ;
-                    data[i][1] = cuerpoCeleste.getCodigoCuerpo() ;
-                    data[i][2] = cuerpoCeleste.getNombre();
-                    data[i][3] = cuerpoCeleste.getTipoObjeto();
-                    data[i][4] = cuerpoCeleste.getDiametro();
-                }
+                data[0][0] = contador ;
+                data[0][1] = cuerpoCeleste.getCodigoCuerpo() ;
+                data[0][2] = cuerpoCeleste.getNombre();
+                data[0][3] = cuerpoCeleste.getTipoObjeto();
+                data[0][4] = cuerpoCeleste.getDiametro();
+                
             }
 
             contador++ ;
