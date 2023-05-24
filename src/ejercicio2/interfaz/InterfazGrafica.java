@@ -274,7 +274,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         if (!encontrado) 
         {
-            System.out.println("\nREGISTRO NO ENCONTRADO.");
+            Utilidades.mostrarMensajeGUI("REGISTRO NO ENCONTRADO.") ;
         }
         
         modeloTabla = new DefaultTableModel(data, columnaNombres) ;
@@ -285,36 +285,57 @@ public class InterfazGrafica extends javax.swing.JFrame {
     /**
      * Método que nos permite buscar un registro concreto buscándolo por su tipo.
      */
-    public static void buscarCuerpoCelestePorTipo(){
+    public static DefaultTableModel buscarCuerpoCelestePorTipo(){
         
         int contador ;
         boolean encontrado = false ;
         
-        do
-        {
-            String tipo = Utilidades.leerStringBuffer("\nIntroduce el código del cuerpo celeste que deseas buscar: ") ;
+        VentanaSecundaria nuevaVentana ;
+        DefaultTableModel modeloTabla = null ;
         
-            GestionFicheros.abrir() ;
-            
-            contador = 1 ;
+        Object[][] data = new Object[cuerposCelestes.size()][5] ;
+        data = new Object[cuerposCelestes.size()][5];
+        String[] columnaNombres = { "Registro", "Código", "Nombre", "Tipo", "Diámetro" };
+        
+      
+        String tipo = Utilidades.leerCadenaGUI("Introduce el código del cuerpo celeste que deseas buscar:") ;
+        
+//            short codigo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste que deseas buscar: ") ;
 
-            for (CuerpoCeleste cuerpoCeleste: cuerposCelestes) 
-            {
-                if (cuerpoCeleste.getTipoObjeto().equalsIgnoreCase(tipo)) 
-                {
-                    encontrado = true ;
-                    System.out.println("\nRegistro nº" + contador + " - " + cuerpoCeleste.toString());
-                }
+        GestionFicheros.abrir() ;
+
+        contador = 1 ;
+
+        for (CuerpoCeleste cuerpoCeleste: cuerposCelestes) 
+        {
+            encontrado = true ;
+            
+//                    System.out.println("\nRegistro nº" + contador + " - " + cuerpoCeleste.toString());
+
+             // Crear los datos de la tabla en un arreglo bidimensional
+             
+            
+            if (cuerpoCeleste.getTipoObjeto().equalsIgnoreCase(tipo)) {
+
+                data[0][0] = contador ;
+                data[0][1] = cuerpoCeleste.getCodigoCuerpo() ;
+                data[0][2] = cuerpoCeleste.getNombre();
+                data[0][3] = cuerpoCeleste.getTipoObjeto();
+                data[0][4] = cuerpoCeleste.getDiametro();
                 
-                contador++ ;
             }
-            
-            if (!encontrado) 
-            {
-                System.out.println("\nNO EXISTEN CUERPOS CELESTES DE ESE TIPO.");
-            }
-            
-        } while (!Utilidades.secuenciaSalida("¿Quieres buscar otro registro?"));
+
+            contador++ ;
+        }
+
+        if (!encontrado) 
+        {
+            Utilidades.mostrarMensajeGUI("REGISTRO NO ENCONTRADO.") ;
+        }
+        
+        modeloTabla = new DefaultTableModel(data, columnaNombres) ;
+       
+        return modeloTabla ;
     }
     
     
@@ -659,11 +680,6 @@ public class InterfazGrafica extends javax.swing.JFrame {
             VentanaSecundaria nuevaVentana = new VentanaSecundaria(cuerposCelestes, listarCuerpoCeleste()) ;
             nuevaVentana.setVisible(true) ;
         }
-
-        
-        
-        
-        botonListarRegistro.setEnabled(rootPaneCheckingEnabled) ;
     }//GEN-LAST:event_botonListarRegistroActionPerformed
 
     private void botonBuscarPorCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarPorCodigoActionPerformed
@@ -745,7 +761,25 @@ public class InterfazGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_botonEliminarFicheroActionPerformed
 
     private void botonBuscarPorTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarPorTipoActionPerformed
-        Utilidades.mostrarMensajeGUI("Esto todavía no funciona") ;
+         limpiarMensajeError();
+        
+        DefaultTableModel modeloTabla = new DefaultTableModel() ;
+        
+        if (!fichero.exists()) 
+        {
+            consolaMensajes.setText("No se puede buscar, el fichero no existe.");
+        }
+        else
+        {
+            marcoPrincipal.setVisible(false) ;
+            setVisible(false) ;
+            
+            modeloTabla = buscarCuerpoCelestePorTipo() ;
+            
+            VentanaSecundaria nuevaVentana = new VentanaSecundaria(cuerposCelestes, modeloTabla) ;
+            nuevaVentana.setVisible(true) ;
+        }
+        
     }//GEN-LAST:event_botonBuscarPorTipoActionPerformed
 
     /**
