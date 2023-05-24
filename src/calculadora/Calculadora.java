@@ -395,7 +395,12 @@ public class Calculadora extends JFrame{
             
         }
         
-        public static void main(String[] args) {
+    /**
+     * Método main de la calculadora
+     * 
+     * @param args
+     */
+    public static void main(String[] args) {
         
             new Calculadora() ;
     }

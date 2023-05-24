@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import utilidades.Utilidades;
 
 /**
- * Interfaz gráfica para la apliación de gestión de los cuerpos celestes.
+ * Interfaz gráfica para la aplicación de gestión de los cuerpos celestes.
  * 
  * @author Adrián Arjona
  * @version mayo 2023
@@ -54,6 +54,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
     public InterfazGrafica() {
         initComponents();
         setLocationRelativeTo(null) ;
+        
     }
     
     
@@ -94,7 +95,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         do 
         {
             
-            codigoCuerpo = Utilidades.leerShortBufferGUI("Introduce el código (3 dígitos): ") ;
+            codigoCuerpo = Utilidades.leerShortGUI("Introduce el código (3 dígitos): ") ;
 //            codigoCuerpo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste (3 dígitos max.):") ;
             validador = OperativaCuerpoCeleste.compruebaCodigo(codigoCuerpo) ;
             
@@ -139,7 +140,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         do
         { 
-            diametro = Utilidades.leerEnteroBufferGUI("Introduce el diámetro (6 dígitos max.):") ;
+            diametro = Utilidades.leerEnteroGUI("Introduce el diámetro (6 dígitos max.):") ;
             validador = OperativaCuerpoCeleste.compruebaDiametro(diametro) ;
             
             if (!validador) 
@@ -168,6 +169,8 @@ public class InterfazGrafica extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
         
+        // Guarda los datos en el fichero
+        
         fichero = GestionFicheros.escribirArchivo() ;
         
 //        System.out.println("\nCuerpo Celeste " + cuerposCelestes.size()+ " añadido");
@@ -175,9 +178,12 @@ public class InterfazGrafica extends javax.swing.JFrame {
     
     
     /**
-     * Método que nos permite visualizar todos los datos almacenador.
+     * Método que nos permite visualizar todos los datos almacenados.
      * Primero comprobamos que el fichero exista.
      * Si existe, lo abrimos y comprobamos que no esté vacío recorriendo todo su contenido.
+     * También creará un modelo de tabla para usarlo en la interfaz gráfica.
+     * 
+     * @return Devuelve el modelo de la tabla.
      */
     public static DefaultTableModel listarCuerpoCeleste(){
         
@@ -228,6 +234,10 @@ public class InterfazGrafica extends javax.swing.JFrame {
     
     /**
      * Método que nos permite buscar un registro concreto buscándolo por su código.
+     * También crea un modelo de tabla para mostrar los datos en la interfaz 
+     * gráfica.
+     * 
+     * @return Devuelve el modelo de la tabla.
      */
     public static DefaultTableModel buscarCuerpoCelestePorCodigo(){
         
@@ -242,7 +252,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         String[] columnaNombres = { "Registro", "Código", "Nombre", "Tipo", "Diámetro" };
         
       
-        short codigo = Utilidades.leerShortBufferGUI("Introduce el código del cuerpo celeste que deseas buscar:") ;
+        short codigo = Utilidades.leerShortGUI("Introduce el código del cuerpo celeste que deseas buscar:") ;
         
 //            short codigo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste que deseas buscar: ") ;
 
@@ -260,6 +270,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
              
             
             if (cuerpoCeleste.getCodigoCuerpo() == codigo) {
+                // Si ha coincidencia creará la fila a añadir
 
                 data[0][0] = contador ;
                 data[0][1] = cuerpoCeleste.getCodigoCuerpo() ;
@@ -273,6 +284,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         }
 
         if (!encontrado) 
+            // Si no hay conicidencia lanza un mensaje
         {
             Utilidades.mostrarMensajeGUI("REGISTRO NO ENCONTRADO.") ;
         }
@@ -282,8 +294,14 @@ public class InterfazGrafica extends javax.swing.JFrame {
         return modeloTabla ;
     }
     
+    
+    
     /**
      * Método que nos permite buscar un registro concreto buscándolo por su tipo.
+     * También crea un modelo de la tabla para mostrar los datos por la interfaz 
+     * gráfiza.
+     * 
+     * @return Devuelve el modelo de la tabla.
      */
     public static DefaultTableModel buscarCuerpoCelestePorTipo(){
         
@@ -343,8 +361,10 @@ public class InterfazGrafica extends javax.swing.JFrame {
      * Método similar al anterior pero que en lugar de limitarse a mostrarnos el 
      * resultado de la búsqueda, nos permite decidir si deseamos elminar el 
      * registro encontrado.
+     * 
+     * @return Devuelve true si el registro fue encontrado y false si no.
      */
-    public static boolean eliminarCuerpoCeleste(){ // NO FUNCIONA CORRECTAMENTE, VOY A SEGUIR Y LUEGO LO ATIENDO
+    public static boolean eliminarCuerpoCeleste(){
         
         /*
         Uno de los errores es que elmina una entrada. Poniendo 1 como código, por ejemplo, 
@@ -364,7 +384,9 @@ public class InterfazGrafica extends javax.swing.JFrame {
         try
         {
             
-            short codigo = Utilidades.leerShortBufferGUI("Introduce el código del cuerpo celeste que deseas eliminar: ") ;
+            // Pide el código del registro que se quiere eliminar
+            
+            short codigo = Utilidades.leerShortGUI("Introduce el código del cuerpo celeste que deseas eliminar: ") ;
 
             GestionFicheros.abrir() ;
 
@@ -378,19 +400,23 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 mensaje = "¿Desea eliminar el registro " + contador + "?\n " + cuerposCelestes.get(contador - 1).toString() ;
 
                 if (cuerpoCeleste.getCodigoCuerpo() == codigo)
+                    // Si hay coincidencia con el código
                 {
                     encontrado = true ;
 //                        System.out.println("\nRegistro nº" + contador + " - " + cuerpoCeleste.toString());
 
+                    // Secuencia de confirmación. Pide confirmación para borrar el registro
+                    
                     respuesta = JOptionPane.showConfirmDialog(null, mensaje, "Confirmación", JOptionPane.YES_NO_OPTION) ;
 
-                    if (respuesta == JOptionPane.YES_OPTION) 
+                    if (respuesta == JOptionPane.YES_OPTION)
+                        // Si la respuesta es sí lo eliminará
                     {
                         mensaje = "REGISTRO Nº " + contador + " ELIMINADO" ;
 
                         cuerposCelestes.remove((contador - 1)) ;
                         GestionFicheros.escribirArchivo() ;
-                        Utilidades.mostrarMensajeGUI(mensaje) ;
+                        Utilidades.mostrarMensajeGUI(mensaje) ; // Cuadro de diálogo que confirma la elminación
                         
                         borrado = true ;
                     }
@@ -399,7 +425,8 @@ public class InterfazGrafica extends javax.swing.JFrame {
             contador++ ;
             }
 
-            if (!encontrado) 
+            if (!encontrado)
+                // Si no hay coincidencia
             {   
                 VentanaSecundaria.consolaMensajes.setText("REGISTRO NO ENCONTRADO.") ;
             }
@@ -459,7 +486,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
     }
     
     
-    // ------------------ COMPROBADORES / VALIDAODRES ----------------------
+    // ------------------ COMPROBADORES / VALIDADORES ----------------------
     
      /**
      * Método que comprueba si el código del cuerpo celeste tiene 3 dígitos.

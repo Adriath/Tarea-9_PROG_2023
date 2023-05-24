@@ -34,6 +34,8 @@ public class GestionFicheros {
      * Previamente comprueba si el fichero exsite y, si es así, carga su contenido en el ArrayList.
      * Luego cierra el fichero. Si por cualquier motivo no se puede leer el disco (está creado 
      * pero no tiene datos) nos avisa que el fichero está vacío.
+     * 
+     * @return Devuelve el fichero.
      */
     public static File abrir(){
             
@@ -86,6 +88,8 @@ public class GestionFicheros {
     /**
      * Método que nos escribe el ArrayList en el fichero de disco. Es la manera 
      * de guardar los datos serializados ya que la clase CuerpoCeleste lo está.
+     * 
+     *  @return Devuelve el fichero.
      */
     public static File escribirArchivo(){
         

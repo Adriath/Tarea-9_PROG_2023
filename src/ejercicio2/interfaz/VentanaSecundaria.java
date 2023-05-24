@@ -1,6 +1,7 @@
 
 package ejercicio2.interfaz;
 
+import ejercicio2.gestionficheros.GestionFicheros;
 import ejercicio2.modelo.CuerpoCeleste;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +10,17 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author Adrián
+ * Ventana secundaria donde se aloja la tabla para visualizar los datos.
+ * 
+ * @author Adrián Arjona
+ * @version Mayo 2023
  */
 public class VentanaSecundaria extends javax.swing.JFrame {
+    
+    
+    /* Francisco Adrián Arjona Bravo
+        UNIDAD 9: comunicándonos con el usuario. Interfaces.
+    */
     
     
     // ------------ DECLARACIÓN DE VARIABLES -----------------
@@ -38,7 +46,7 @@ public class VentanaSecundaria extends javax.swing.JFrame {
         
         cuerposCelestes = InterfazGrafica.cuerposCelestes ;
         
-         // Crear los datos de la tabla en un arreglo bidimensional
+         // Creación de los datos de la tabla en un array bidimensional
         Object[][] data = new Object[cuerposCelestes.size()][5];
         for (int i = 0; i < cuerposCelestes.size(); i++) {
             CuerpoCeleste cuerpoCeleste = cuerposCelestes.get(i);
@@ -49,16 +57,16 @@ public class VentanaSecundaria extends javax.swing.JFrame {
             data[i][4] = cuerpoCeleste.getDiametro();
         }
 
-        // Crear los nombres de las columnas
-        String[] columnNames = { "Registro", "Código", "Nombre", "Tipo", "Diámetro" };
+        // Creación del array con los nombres de las columnas
+        String[] columnaNombres = { "Registro", "Código", "Nombre", "Tipo", "Diámetro" };
 
-        // Crear el modelo de la tabla con los datos y los nombres de las columnas
-        DefaultTableModel model = new DefaultTableModel(data, columnNames);
+        // Creación del modelo de la tabla con los datos y los nombres de las columnas
+        DefaultTableModel model = new DefaultTableModel(data, columnaNombres);
 
         // Crear la tabla con el modelo
         tabla = new JTable(model);
 
-        // Agregar la tabla a un JScrollPane para permitir el desplazamiento si hay muchos registros
+        // Agregamos la tabla a un JScrollPane para permitir el desplazamiento si hay muchos registros
         JScrollPane scrollPane = new JScrollPane(tabla);
         
         add(scrollPane);
@@ -83,10 +91,10 @@ public class VentanaSecundaria extends javax.swing.JFrame {
         cuerposCelestes = InterfazGrafica.cuerposCelestes ;
         
         
-        // Crear la tabla con el modelo
+        // Creación de la tabla con el modelo
         tabla = new JTable(modeloTabla);
 
-        // Agregar la tabla a un JScrollPane para permitir el desplazamiento si hay muchos registros
+        // Agregamos la tabla a un JScrollPane para permitir el desplazamiento si hay muchos registros
         JScrollPane scrollPane = new JScrollPane(tabla);
         
         add(scrollPane);

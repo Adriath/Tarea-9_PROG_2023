@@ -569,7 +569,7 @@ public class Utilidades {
      * @param msg. Tipo String. Mensaje con el que se pide el número al usuario/a.
      * @return numero. Int. Devuelve el número introducido por el/la usuario/a.
      */
-    public static int leerEnteroBufferGUI(String msg){
+    public static int leerEnteroGUI(String msg){
     
         int numero = 0 ;
         String entrada = "" ;
@@ -604,7 +604,7 @@ public class Utilidades {
      * @param msg. Tipo String. Mensaje con el que se pide el número al usuario/a.
      * @return numero. Short. Devuelve el número introducido por el/la usuario/a.
      */
-    public static short leerShortBufferGUI(String msg){
+    public static short leerShortGUI(String msg){
     
         short numero = 0 ;
         String entrada = "" ;
@@ -640,8 +640,7 @@ public class Utilidades {
      * 
      * @param msj String. Mensaje introducido por el usuario.
      * @return boolean valido. Devuelve si es válida la respuesta (true) o no (false).
-     * @throws utilidades.excepciones.ExcepcionDecisionUsuario
-     * @throws ExcepcionDecisionUsuario.
+     * @throws utilidades.ExcepcionDecisionUsuario
      */
     public static boolean compruebaDecisionUsuario(String msj)throws ExcepcionDecisionUsuario{
         String si = "s" ;
