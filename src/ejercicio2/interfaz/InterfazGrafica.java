@@ -4,7 +4,6 @@ package ejercicio2.interfaz;
 import ejercicio2.excepciones.ExcepcionCuerpoCeleste;
 import ejercicio2.gestionficheros.GestionFicheros;
 import ejercicio2.modelo.CuerpoCeleste;
-import ejercicio2.operativa.OperativaCuerpoCeleste;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -87,7 +86,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         boolean validador ;
         
         
-        fichero = GestionFicheros.abrir();
+        GestionFicheros.fichero = GestionFicheros.abrir();
         
         
         // Pedimos el CÓDIGO
@@ -97,7 +96,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
             
             codigoCuerpo = Utilidades.leerShortGUI("Introduce el código (3 dígitos): ") ;
 //            codigoCuerpo = Utilidades.leerShortBuffer("\nIntroduce el código del cuerpo celeste (3 dígitos max.):") ;
-            validador = OperativaCuerpoCeleste.compruebaCodigo(codigoCuerpo) ;
+            validador = compruebaCodigo(codigoCuerpo) ;
             
             if (!validador) 
             {
@@ -116,7 +115,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         {
             nombre = Utilidades.leerCadenaGUI("Introduce en el nombre del cuerpo celeste (15 caracteres max.):") ;
 //            nombre = Utilidades.leerStringBuffer("\nIntroduce en el nombre del cuerpo celeste (15 caracteres max.):") ;
-            validador = OperativaCuerpoCeleste.compruebaNombre(nombre) ;
+            validador = compruebaNombre(nombre) ;
             
             if (!validador) 
             {
@@ -141,7 +140,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         do
         { 
             diametro = Utilidades.leerEnteroGUI("Introduce el diámetro (6 dígitos max.):") ;
-            validador = OperativaCuerpoCeleste.compruebaDiametro(diametro) ;
+            validador = compruebaDiametro(diametro) ;
             
             if (!validador) 
             {
@@ -155,14 +154,14 @@ public class InterfazGrafica extends javax.swing.JFrame {
             válidos continuamos almacenándolos.
         */
         
-        if (cuerposCelestes.isEmpty()) // Si el array está vacío...
+        if (GestionFicheros.cuerposCelestes.isEmpty()) // Si el array está vacío...
         {
-            cuerposCelestes = new ArrayList<CuerpoCeleste>() ; // ... créalo.
+            GestionFicheros.cuerposCelestes = new ArrayList<CuerpoCeleste>() ; // ... créalo.
         }
         
         try
         {
-            cuerposCelestes.add(new CuerpoCeleste(codigoCuerpo, nombre, tipoObjeto, diametro)) ;
+            GestionFicheros.cuerposCelestes.add(new CuerpoCeleste(codigoCuerpo, nombre, tipoObjeto, diametro)) ;
         }
         catch(ExcepcionCuerpoCeleste e){
             
@@ -171,7 +170,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         
         // Guarda los datos en el fichero
         
-        fichero = GestionFicheros.escribirArchivo() ;
+        GestionFicheros.fichero = GestionFicheros.escribirArchivo() ;
         
 //        System.out.println("\nCuerpo Celeste " + cuerposCelestes.size()+ " añadido");
     }
@@ -187,13 +186,13 @@ public class InterfazGrafica extends javax.swing.JFrame {
      */
     public static DefaultTableModel listarCuerpoCeleste(){
         
-        fichero = GestionFicheros.abrir();
+        GestionFicheros.fichero = GestionFicheros.abrir();
 
-        if (cuerposCelestes != null) 
+        if (GestionFicheros.cuerposCelestes != null) 
         {
             int contador = 1 ;
 
-            for (CuerpoCeleste objeto: cuerposCelestes) 
+            for (CuerpoCeleste objeto: GestionFicheros.cuerposCelestes) 
             {
                 System.out.println("Registro nº " + contador + " - "  + objeto.toString());
                 contador++ ;
@@ -209,11 +208,11 @@ public class InterfazGrafica extends javax.swing.JFrame {
         
           // Creación de los datos de la tabla en un array bidimensional
           
-        Object[][] data = new Object[cuerposCelestes.size()][5] ;
+        Object[][] data = new Object[GestionFicheros.cuerposCelestes.size()][5] ;
         
-        for (int i = 0; i < cuerposCelestes.size(); i++) {
+        for (int i = 0; i < GestionFicheros.cuerposCelestes.size(); i++) {
             
-            CuerpoCeleste cuerpoCeleste = cuerposCelestes.get(i);
+            CuerpoCeleste cuerpoCeleste = GestionFicheros.cuerposCelestes.get(i);
             data[i][0] = i + 1 ;
             data[i][1] = cuerpoCeleste.getCodigoCuerpo() ;
             data[i][2] = cuerpoCeleste.getNombre() ;
@@ -248,7 +247,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         DefaultTableModel modeloTabla = null ;
         
         Object[][] data = new Object[cuerposCelestes.size()][5] ;
-        data = new Object[cuerposCelestes.size()][5];
+        data = new Object[GestionFicheros.cuerposCelestes.size()][5];
         String[] columnaNombres = { "Registro", "Código", "Nombre", "Tipo", "Diámetro" };
         
       
@@ -260,7 +259,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         contador = 1 ;
 
-        for (CuerpoCeleste cuerpoCeleste: cuerposCelestes) 
+        for (CuerpoCeleste cuerpoCeleste: GestionFicheros.cuerposCelestes) 
         {
             encontrado = true ;
             
@@ -312,7 +311,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         DefaultTableModel modeloTabla = null ;
         
         Object[][] data = new Object[cuerposCelestes.size()][5] ;
-        data = new Object[cuerposCelestes.size()][5];
+        data = new Object[GestionFicheros.cuerposCelestes.size()][5];
         String[] columnaNombres = { "Registro", "Código", "Nombre", "Tipo", "Diámetro" };
         
       
@@ -324,7 +323,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
         contador = 1 ;
 
-        for (CuerpoCeleste cuerpoCeleste: cuerposCelestes) 
+        for (CuerpoCeleste cuerpoCeleste: GestionFicheros.cuerposCelestes) 
         {
             encontrado = true ;
             
@@ -394,10 +393,10 @@ public class InterfazGrafica extends javax.swing.JFrame {
 
             encontrado = false ;
 
-            for(CuerpoCeleste cuerpoCeleste: cuerposCelestes)
+            for(CuerpoCeleste cuerpoCeleste: GestionFicheros.cuerposCelestes)
             {
 
-                mensaje = "¿Desea eliminar el registro " + contador + "?\n " + cuerposCelestes.get(contador - 1).toString() ;
+                mensaje = "¿Desea eliminar el registro " + contador + "?\n " + GestionFicheros.cuerposCelestes.get(contador - 1).toString() ;
 
                 if (cuerpoCeleste.getCodigoCuerpo() == codigo)
                     // Si hay coincidencia con el código
@@ -414,7 +413,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
                     {
                         mensaje = "REGISTRO Nº " + contador + " ELIMINADO" ;
 
-                        cuerposCelestes.remove((contador - 1)) ;
+                        GestionFicheros.cuerposCelestes.remove((contador - 1)) ;
                         GestionFicheros.escribirArchivo() ;
                         Utilidades.mostrarMensajeGUI(mensaje) ; // Cuadro de diálogo que confirma la elminación
                         
@@ -451,7 +450,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         int respuesta ;
         boolean borrado ;
         
-        if (fichero.exists())
+        if (GestionFicheros.fichero.exists())
             // Si el fichero existe
         {
             try
@@ -463,13 +462,13 @@ public class InterfazGrafica extends javax.swing.JFrame {
                 if (respuesta == JOptionPane.YES_OPTION)
                     //Si la respuesta es sí...
                 {
-                    borrado = fichero.delete() ; // ... borra el fichero.
+                    borrado = GestionFicheros.fichero.delete() ; // ... borra el fichero.
 
                     if (borrado) 
                         // Si ha sido borrado avisa con un mensaje.
                     {
                         Utilidades.mostrarMensajeGUI("FICHERO DE DATOS ELMINADO.") ;
-                        cuerposCelestes.clear();
+                        GestionFicheros.cuerposCelestes.clear();
                     }
                 }
                 else
@@ -688,23 +687,24 @@ public class InterfazGrafica extends javax.swing.JFrame {
         limpiarMensajeError() ;
         aniadirCuerpoCeleste() ;
         
-        Utilidades.mostrarMensajeGUI("Cuerpo Celeste " + cuerposCelestes.size()+ " añadido") ;
+        Utilidades.mostrarMensajeGUI("Cuerpo Celeste " + GestionFicheros.cuerposCelestes.size()+ " añadido") ;
         
     }//GEN-LAST:event_botonAniadirRegistroActionPerformed
 
     private void botonListarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonListarRegistroActionPerformed
         limpiarMensajeError() ;
         
-        if (!fichero.exists()) 
+        if (!GestionFicheros.fichero.exists()) 
         {
             consolaMensajes.setText("No se puede listar, el fichero no existe.");
         }
         else
         {
+            GestionFicheros.abrir() ;
             marcoPrincipal.setVisible(false); ;
             setVisible(false);
             
-            VentanaSecundaria nuevaVentana = new VentanaSecundaria(cuerposCelestes, listarCuerpoCeleste()) ;
+            VentanaSecundaria nuevaVentana = new VentanaSecundaria(GestionFicheros.cuerposCelestes, listarCuerpoCeleste()) ;
             nuevaVentana.setVisible(true) ;
         }
     }//GEN-LAST:event_botonListarRegistroActionPerformed
@@ -714,7 +714,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         
         DefaultTableModel modeloTabla = new DefaultTableModel() ;
         
-        if (!fichero.exists()) 
+        if (!GestionFicheros.fichero.exists()) 
         {
             consolaMensajes.setText("No se puede buscar, el fichero no existe.");
         }
@@ -725,7 +725,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
             
             modeloTabla = buscarCuerpoCelestePorCodigo() ;
             
-            VentanaSecundaria nuevaVentana = new VentanaSecundaria(cuerposCelestes, modeloTabla) ;
+            VentanaSecundaria nuevaVentana = new VentanaSecundaria(GestionFicheros.cuerposCelestes, modeloTabla) ;
             nuevaVentana.setVisible(true) ;
         }
     }//GEN-LAST:event_botonBuscarPorCodigoActionPerformed
@@ -739,7 +739,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         limpiarMensajeError() ;
         
         
-        if (!fichero.exists()) 
+        if (!GestionFicheros.fichero.exists()) 
         {
             consolaMensajes.setText("No se puede eliminar, el fichero no existe.") ;
         }
@@ -749,7 +749,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
             marcoPrincipal.setVisible(false); ;
             setVisible(false);
             
-            VentanaSecundaria nuevaVentana = new VentanaSecundaria(cuerposCelestes, listarCuerpoCeleste()) ;
+            VentanaSecundaria nuevaVentana = new VentanaSecundaria(GestionFicheros.cuerposCelestes, listarCuerpoCeleste()) ;
             nuevaVentana.setVisible(true) ;
             
             do{
@@ -779,7 +779,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
     private void botonEliminarFicheroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarFicheroActionPerformed
         limpiarMensajeError() ;
         
-        if (!(fichero.exists())) 
+        if (!(GestionFicheros.fichero.exists())) 
         {
             consolaMensajes.setText("EL FICHERO NO EXISTE.") ;
         }
@@ -792,7 +792,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
         
         DefaultTableModel modeloTabla = new DefaultTableModel() ;
         
-        if (!fichero.exists()) 
+        if (!GestionFicheros.fichero.exists()) 
         {
             consolaMensajes.setText("No se puede buscar, el fichero no existe.");
         }
@@ -803,7 +803,7 @@ public class InterfazGrafica extends javax.swing.JFrame {
             
             modeloTabla = buscarCuerpoCelestePorTipo() ;
             
-            VentanaSecundaria nuevaVentana = new VentanaSecundaria(cuerposCelestes, modeloTabla) ;
+            VentanaSecundaria nuevaVentana = new VentanaSecundaria(GestionFicheros.cuerposCelestes, modeloTabla) ;
             nuevaVentana.setVisible(true) ;
         }
         

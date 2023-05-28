@@ -23,8 +23,8 @@ public class GestionFicheros {
         UNIDAD 9: comunicándonos con el usuario. Interfaces.
     */
     
-    private static File fichero = new File("sistemasolar.dat") ;
-    private static List<CuerpoCeleste> cuerposCelestes = new ArrayList<>() ;
+    public static File fichero = new File("sistemasolar.dat") ;
+    public static List<CuerpoCeleste> cuerposCelestes = new ArrayList<>() ;
      
     // -------------- MÉTODOS ---------------------
 
@@ -99,7 +99,7 @@ public class GestionFicheros {
                 fichero = new File("sistemasolar.dat");
             FileOutputStream fos = new FileOutputStream(fichero) ;
             ObjectOutputStream oos = new ObjectOutputStream(fos) ;
-            oos.writeObject(cuerposCelestes);
+            oos.writeObject(GestionFicheros.cuerposCelestes);
             oos.close();
             fos.close();
         }
